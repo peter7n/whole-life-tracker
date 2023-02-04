@@ -4,7 +4,9 @@ const ExerciseRow = () => {
 	return (
 		<HabitRow
 			name="Exercise"
-			inputType="multi-textbox"
+			inputType="checkbox-and-text"
+			checkboxId="exercise"
+			textId="exercise-notes"
 		/>
 	);
 }

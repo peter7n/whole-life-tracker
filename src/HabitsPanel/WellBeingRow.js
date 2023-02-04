@@ -4,7 +4,7 @@ const WellBeingRow = () => {
 	return (
 		<HabitRow
 			name="Well-Being"
-			inputType="multi-textbox"
+			inputType="checkbox-and-notes"
 		/>
 	);
 }

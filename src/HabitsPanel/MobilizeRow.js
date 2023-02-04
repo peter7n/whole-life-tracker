@@ -4,7 +4,8 @@ const MobilizeRow = () => {
 	return (
 		<HabitRow
 			name="Mobilize"
-			inputType="multi-textbox"
+			inputType="checkbox"
+			id="mobilize"
 		/>
 	);
 }

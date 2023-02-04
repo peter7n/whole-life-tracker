@@ -4,7 +4,8 @@ const HydrateRow = () => {
 	return (
 		<HabitRow
 			name="Hydrate"
-			inputType="multi-textbox"
+			inputType="checkbox"
+			id="hydrate"
 		/>
 	);
 }

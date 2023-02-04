@@ -4,7 +4,8 @@ const SleepRow = () => {
 	return (
 		<HabitRow
 			name="Sleep"
-			inputType="multi-textbox"
+			inputType="checkbox"
+			id="sleep"
 		/>
 	);
 }

@@ -4,7 +4,7 @@ const ReflectRow = () => {
 	return (
 		<HabitRow
 			name="Reflect"
-			inputType="multi-textbox"
+			inputType="checkbox-and-notes"
 		/>
 	);
 }
