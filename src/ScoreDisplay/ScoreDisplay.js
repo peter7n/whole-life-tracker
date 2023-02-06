@@ -1,7 +1,7 @@
-const ScoreDisplay = () => {
+const ScoreDisplay = (props) => {
 	return (
 		<div>
-			<p>Total: 550</p>
+			<p>Total: {props.score}</p>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import PointsDisplay from '../HabitsPanel/PointsDisplay';
+// import PointsDisplay from '../HabitsPanel/PointsDisplay';
 
 const HabitRow = (props) => {
 	let inputContent = '';
@@ -14,7 +14,7 @@ const HabitRow = (props) => {
 			<input type="text" id="food" name="food" />
 			<input type="submit" value="submit" />
 		</form>;
-	let checkbox = <form><label for="{props.checkboxId}">Accomplished</label><input type="checkbox" id="{props.checkboxId}" name="{props.checkboxId}" value="false" /></form>
+	let checkbox = <form><label for="{props.checkboxId}">Accomplished</label><input type="checkbox" id="{props.checkboxId}" name="{props.checkboxId}" onChange={props.onChange} /></form>
 	let checkboxAndText = <form><label for="props.textId">Notes</label><textarea id="props.textId" name="props.textId" ></textarea><label for="{props.checkboxId}">Accomplished</label><input type="checkbox" id="{props.checkboxId}" name="{props.checkboxId}" value="false" /></form>
 	
 	if (props.inputType === 'multi-textbox') {
@@ -29,7 +29,7 @@ const HabitRow = (props) => {
 		<div>
 			<h2>{props.name}</h2>
 			{inputContent}
-			<PointsDisplay type="props.name" />
+			{/* <PointsDisplay type="props.name" /> */}
 		</div>
 	);
 }
