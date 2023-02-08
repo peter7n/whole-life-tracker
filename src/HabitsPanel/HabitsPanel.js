@@ -40,7 +40,7 @@ const HabitsPanel = (props) => {
 			<SleepRow onScoreUpdate={scoreUpdateHandler} />
 			<HydrateRow onScoreUpdate={scoreUpdateHandler} />
 			<WellBeingRow />
-			<ReflectRow />
+			<ReflectRow onScoreUpdate={scoreUpdateHandler} />
 			<button type="submit">Submit</button>
 			<ScoreDisplay score={sleepScore + hydrateScore} />
 		</form>

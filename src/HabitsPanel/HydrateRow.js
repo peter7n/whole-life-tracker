@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import HabitRow from '../UI/HabitRow';
+import Input from '../UI/Input';
 
 const HydrateRow = (props) => {
 	const [hydrateChecked, setHydrateState] = useState(false);
@@ -15,13 +16,15 @@ const HydrateRow = (props) => {
 	
 	return (
 		<div>
-			<HabitRow
-				name="Hydrate"
-				inputType="checkbox"
-				checkboxId="hydrate"
-				onChange={hydrateCheckHandler}
-			/>
-			{hydrateChecked && <p>+5</p>}
+			<HabitRow name="Hydrate">
+				<Input 
+					type="checkbox"
+					id="hydrate-check"
+					label="Accomplished"
+					onChange={hydrateCheckHandler}
+				 />
+				{hydrateChecked && <p>+5</p>}
+			</HabitRow>
 		</div>
 	);
 }

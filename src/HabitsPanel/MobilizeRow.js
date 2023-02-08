@@ -2,11 +2,9 @@ import HabitRow from '../UI/HabitRow';
 
 const MobilizeRow = () => {
 	return (
-		<HabitRow
-			name="Mobilize"
-			inputType="checkbox"
-			id="mobilize"
-		/>
+		<HabitRow name="Mobilize">
+			
+		</HabitRow>
 	);
 }
 
