@@ -5,10 +5,14 @@ import HabitsPanel from './HabitsPanel/HabitsPanel';
 // import ScoreDisplay from './ScoreDisplay/ScoreDisplay';
 
 function App() {
+  const submitDayHandler = (dayData) => {
+    console.log(dayData);
+  }
+  
   return (
     <Fragment>
       <DateBar />
-      <HabitsPanel />
+      <HabitsPanel onSubmitDay={submitDayHandler} />
     </Fragment>
   );
 }

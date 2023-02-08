@@ -6,10 +6,10 @@ const SleepRow = (props) => {
 	const sleepCheckHandler = () => {
 		if (!sleepChecked) {
 			setSleepCheckState(true);
-			props.onScoreUpdate(5);
+			props.onScoreUpdate('SLEEP', 5);
 		} else {
 			setSleepCheckState(false);
-			props.onScoreUpdate(-5);
+			props.onScoreUpdate('SLEEP', -5);
 		}
 	}
 	return (
