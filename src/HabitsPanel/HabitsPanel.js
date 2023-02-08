@@ -11,22 +11,29 @@ import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 const HabitsPanel = (props) => {
 	const [sleepScore, setSleepScore] = useState(0);
 	const [hydrateScore, setHydrateScore] = useState(0);
+	const [reflectScore, setReflectScore] = useState(0);
+	const [reflectNotes, setReflectNotes] = useState('');
 
-	const scoreUpdateHandler = (habit, points) => {
+	const scoreUpdateHandler = (habit, points, notes) => {
 		if (habit === 'SLEEP') {
 			setSleepScore(sleepScore + points);
 		} else if (habit === 'HYDRATE') {
 			setHydrateScore(hydrateScore + points);
+		} else if (habit === 'REFLECT') {
+			setReflectScore(reflectScore + points);
+			setReflectNotes(notes);
 		}
 	}
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		const totalScore = sleepScore + hydrateScore;
+		const totalScore = sleepScore + hydrateScore + reflectScore;
 		const dayData = {
 			date: 'Feb. 8, 2023',
 			sleep: sleepScore,
 			hydrate: hydrateScore,
+			reflect: reflectScore,
+			reflect_notes: reflectNotes,
 			total: totalScore
 		}
 		props.onSubmitDay(dayData); //pass the data object
@@ -42,7 +49,7 @@ const HabitsPanel = (props) => {
 			<WellBeingRow />
 			<ReflectRow onScoreUpdate={scoreUpdateHandler} />
 			<button type="submit">Submit</button>
-			<ScoreDisplay score={sleepScore + hydrateScore} />
+			<ScoreDisplay score={sleepScore + hydrateScore + reflectScore} />
 		</form>
 	);
 }

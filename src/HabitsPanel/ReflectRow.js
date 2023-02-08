@@ -2,14 +2,38 @@ import { useState } from 'react';
 import HabitRow from '../UI/HabitRow';
 import Input from '../UI/Input';
 
-const ReflectRow = () => {
+const ReflectRow = (props) => {
 	const [reflectChecked, setReflectChecked] = useState(false);
-	const [reflectNotes, setReflectNotes] = useState('');
+	const [enteredReflectNotes, setEnteredReflectNotes] = useState('');
+	
+	const reflectCheckHandler = () => {
+		if (!reflectChecked) {
+			setReflectChecked(true);
+			props.onScoreUpdate('REFLECT', 5);
+		} else {
+			setReflectChecked(false);
+			props.onScoreUpdate('REFLECT', -5);
+		}
+	}
+
+	const reflectNotesHandler = (event) => {
+		setEnteredReflectNotes(event.target.value);
+		props.onScoreUpdate('REFLECT', 0, enteredReflectNotes)
+	}
 
 	return (
 		<HabitRow name="Reflect">
-			<Input type="checkbox" label="Accomplished" id="reflect-check" />
-			<Input type="textarea" label="Notes" id="reflect-text" />
+			<Input
+				type="checkbox"
+				label="Accomplished"
+				id="reflect-check"
+				onChange={reflectCheckHandler} />
+			<Input
+				type="textarea"
+				label="Notes"
+				id="reflect-text"
+				value={enteredReflectNotes}
+				onChange={reflectNotesHandler} />
 		</HabitRow>
 	);
 }
