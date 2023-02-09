@@ -4,8 +4,8 @@ import Input from '../UI/Input';
 
 const HydrateRow = (props) => {
 	const [hydrateChecked, setHydrateState] = useState(false);
-	
-	const hydrateCheckHandler = () => {
+
+	const hydrateCheckHandler = (event) => {
 		if (!hydrateChecked) {
 			setHydrateState(true);
 			props.onScoreUpdate('HYDRATE', 5);

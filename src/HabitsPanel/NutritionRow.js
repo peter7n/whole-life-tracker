@@ -3,7 +3,7 @@ import HabitRow from '../UI/HabitRow';
 import Input from '../UI/Input';
 
 const NutritionRow = (props) => {
-	const [pointsSelected, setPointsSelected] = useState(-1);
+	const [pointsSelected, setPointsSelected] = useState('-1');
 	const [enteredFood, setEnteredFood] = useState('');
 	const [foodArray, setFoodArray] = useState([]);
 	const [nutritionPoints, setNutritionPoints] = useState(5);
@@ -22,11 +22,14 @@ const NutritionRow = (props) => {
 			points: pointsSelected,
 			food: enteredFood
 		};
+		let updatedArray = [foodEntry, ...foodArray];
+		let updatedPoints = nutritionPoints + +pointsSelected;
+
 		setFoodArray((prevFoodArray) => {
 			return [foodEntry, ...prevFoodArray];
 		});
-		setNutritionPoints(nutritionPoints + +pointsSelected);
-		props.onScoreUpdate('NUTRITION', nutritionPoints, foodArray);
+		setNutritionPoints(updatedPoints);
+		props.onScoreUpdate('NUTRITION', updatedPoints, updatedArray);
 	};
 	
 	return (

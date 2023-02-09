@@ -18,7 +18,7 @@ const ReflectRow = (props) => {
 
 	const reflectNotesHandler = (event) => {
 		setEnteredReflectNotes(event.target.value);
-		props.onScoreUpdate('REFLECT', 0, enteredReflectNotes)
+		props.onScoreUpdate('REFLECT', 0, enteredReflectNotes);
 	}
 
 	return (

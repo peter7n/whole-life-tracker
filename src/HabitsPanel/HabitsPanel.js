@@ -9,36 +9,41 @@ import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 
 const HabitsPanel = (props) => {
+	const [nutritionScore, setNutritionScore] = useState(0);
+	const [nutritionFoodArray, setNutritionFoodArray] = useState([]);
 	const [sleepScore, setSleepScore] = useState(0);
 	const [hydrateScore, setHydrateScore] = useState(0);
 	const [reflectScore, setReflectScore] = useState(0);
 	const [reflectNotes, setReflectNotes] = useState('');
 
-	const scoreUpdateHandler = (habit, points, notes) => {
+	const scoreUpdateHandler = (habit, points, data) => {
 		if (habit === 'SLEEP') {
 			setSleepScore(sleepScore + points);
 		} else if (habit === 'HYDRATE') {
 			setHydrateScore(hydrateScore + points);
 		} else if (habit === 'REFLECT') {
 			setReflectScore(reflectScore + points);
-			setReflectNotes(notes);
+			setReflectNotes(data);
 		} else if (habit === 'NUTRITION') {
-			console.log(habit, points, notes);
+			setNutritionScore(points);
+			setNutritionFoodArray(data);
 		}
 	}
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		const totalScore = sleepScore + hydrateScore + reflectScore;
+		const totalScore = nutritionScore + sleepScore + hydrateScore + reflectScore;
 		const dayData = {
 			date: 'Feb. 8, 2023',
+			nutrition: nutritionScore,
+			nutrition_noncompliant: nutritionFoodArray,
 			sleep: sleepScore,
 			hydrate: hydrateScore,
 			reflect: reflectScore,
 			reflect_notes: reflectNotes,
 			total: totalScore
 		}
-		props.onSubmitDay(dayData); //pass the data object
+		props.onSubmitDay(dayData); //pass day data to App.js
 	}
 
 	return (
@@ -51,7 +56,7 @@ const HabitsPanel = (props) => {
 			<WellBeingRow />
 			<ReflectRow onScoreUpdate={scoreUpdateHandler} />
 			<button type="submit">Submit</button>
-			<ScoreDisplay score={sleepScore + hydrateScore + reflectScore} />
+			<ScoreDisplay score={nutritionScore + sleepScore + hydrateScore + reflectScore} />
 		</form>
 	);
 }

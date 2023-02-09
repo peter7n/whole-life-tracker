@@ -6,7 +6,7 @@ const Input = (props) => {
 	const checkbox =
 		<div>
 			<label htmlFor={props.id}>{props.label}</label>
-			<input type="checkbox" id={props.id} name={props.id} onChange={props.onChange} />
+			<input type="checkbox" id={props.id} name={props.id} onChange={props.onChange} value={props.value} />
 		</div>;
 
 	const textarea =
