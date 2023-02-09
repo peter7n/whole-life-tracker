@@ -34,6 +34,7 @@ const ReflectRow = (props) => {
 				id="reflect-text"
 				value={enteredReflectNotes}
 				onChange={reflectNotesHandler} />
+			{reflectChecked && <p>+5</p>}
 		</HabitRow>
 	);
 }

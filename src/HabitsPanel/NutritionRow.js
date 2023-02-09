@@ -1,8 +1,50 @@
+import { useState } from 'react';
 import HabitRow from '../UI/HabitRow';
+import Input from '../UI/Input';
 
-const NutritionRow = () => {
+const NutritionRow = (props) => {
+	const [pointsSelected, setPointsSelected] = useState(-1);
+	const [enteredFood, setEnteredFood] = useState('');
+	const [foodArray, setFoodArray] = useState([]);
+	const [nutritionPoints, setNutritionPoints] = useState(5);
+
+	const pointsSelectHandler = (event) => {
+		setPointsSelected(event.target.value);
+	}
+
+	const foodEnteredHandler = (event) => {
+		setEnteredFood(event.target.value);
+	}
+	
+	const clickHandler = (event) => {
+		event.preventDefault(); // prevent form submission
+		let foodEntry = {
+			points: pointsSelected,
+			food: enteredFood
+		};
+		setFoodArray((prevFoodArray) => {
+			return [foodEntry, ...prevFoodArray];
+		});
+		setNutritionPoints(nutritionPoints + +pointsSelected);
+		props.onScoreUpdate('NUTRITION', nutritionPoints, foodArray);
+	};
+	
 	return (
 		<HabitRow name="Nutrition">
+			<Input
+				type="select"
+				id="nutrition-select"
+				label="Pts"
+				value={pointsSelected}
+				onChange={pointsSelectHandler} />
+			<Input
+				type="text"
+				id="nutrition-text"
+				label="Food"
+				value={enteredFood}
+				onChange={foodEnteredHandler} />
+			<button onClick={clickHandler}>Add</button>
+			<p>{nutritionPoints}</p>
 		</HabitRow>
 	);
 }

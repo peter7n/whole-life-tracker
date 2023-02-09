@@ -22,6 +22,8 @@ const HabitsPanel = (props) => {
 		} else if (habit === 'REFLECT') {
 			setReflectScore(reflectScore + points);
 			setReflectNotes(notes);
+		} else if (habit === 'NUTRITION') {
+			console.log(habit, points, notes);
 		}
 	}
 
@@ -41,7 +43,7 @@ const HabitsPanel = (props) => {
 
 	return (
 		<form onSubmit={submitHandler}>
-			<NutritionRow />
+			<NutritionRow onScoreUpdate={scoreUpdateHandler} />
 			<ExerciseRow />
 			<MobilizeRow />
 			<SleepRow onScoreUpdate={scoreUpdateHandler} />
