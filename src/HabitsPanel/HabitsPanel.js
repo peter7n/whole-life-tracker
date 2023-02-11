@@ -3,10 +3,11 @@ import NutritionRow from './NutritionRow';
 import ExerciseRow from './ExerciseRow';
 import MobilizeRow from './MobilizeRow';
 import SleepRow from './SleepRow';
-import HydrateRow from './HydrateRow';
+// import HydrateRow from './HydrateRow';
 import WellBeingRow from './WellBeingRow';
-import ReflectRow from './ReflectRow';
+// import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
+import TrackingRow from './TrackingRow';
 
 const HabitsPanel = (props) => {
 	const [nutritionScore, setNutritionScore] = useState(0);
@@ -19,9 +20,9 @@ const HabitsPanel = (props) => {
 	const scoreUpdateHandler = (habit, points, data) => {
 		if (habit === 'SLEEP') {
 			setSleepScore(sleepScore + points);
-		} else if (habit === 'HYDRATE') {
+		} else if (habit === 'Hydrate') {
 			setHydrateScore(hydrateScore + points);
-		} else if (habit === 'REFLECT') {
+		} else if (habit === 'Reflect') {
 			setReflectScore(reflectScore + points);
 			setReflectNotes(data);
 		} else if (habit === 'NUTRITION') {
@@ -52,9 +53,17 @@ const HabitsPanel = (props) => {
 			<ExerciseRow />
 			<MobilizeRow />
 			<SleepRow onScoreUpdate={scoreUpdateHandler} />
-			<HydrateRow onScoreUpdate={scoreUpdateHandler} />
+			<TrackingRow
+				name="Hydrate"
+				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check'} }
+				textarea={{show: false}}
+				onScoreUpdate={scoreUpdateHandler} />
 			<WellBeingRow />
-			<ReflectRow onScoreUpdate={scoreUpdateHandler} />
+			<TrackingRow
+				name="Reflect"
+				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check'} }
+				textarea={ {show: true, label: 'Notes', id: 'reflect-text'} }
+				onScoreUpdate={scoreUpdateHandler} />
 			<button type="submit">Submit</button>
 			<ScoreDisplay score={nutritionScore + sleepScore + hydrateScore + reflectScore} />
 		</form>

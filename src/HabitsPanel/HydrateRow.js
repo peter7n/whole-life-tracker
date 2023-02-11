@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import HabitRow from '../UI/HabitRow';
+import HabitRow from '../UI/HabitRowWrapper';
 import Input from '../UI/Input';
 
 const HydrateRow = (props) => {

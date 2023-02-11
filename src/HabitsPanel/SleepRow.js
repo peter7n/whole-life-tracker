@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import HabitRow from '../UI/HabitRow';
+import HabitRow from '../UI/HabitRowWrapper';
 
 const SleepRow = (props) => {
 	const [sleepChecked, setSleepCheckState] = useState(false);

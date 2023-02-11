@@ -1,9 +1,9 @@
-import HabitRow from '../UI/HabitRow';
+import HabitRow from '../UI/HabitRowWrapper';
 
 const MobilizeRow = () => {
 	return (
 		<HabitRow name="Mobilize">
-			
+
 		</HabitRow>
 	);
 }
