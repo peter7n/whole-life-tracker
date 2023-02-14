@@ -1,0 +1,17 @@
+[
+	{
+		"date": "Feb. 8, 2023",
+		"nutrition": 5,
+		"nutrition_noncompliant": [],
+		"exercise": 5,
+		"exercise_notes": "exerciseNotes",
+		"mobilize": 5,
+		"sleep": 5,
+		"hydrate": 5,
+		"wellbeing": 5,
+		"wellbeing_notes": "wellBeingNotes",
+		"reflect": 5,
+		"reflect_notes": "reflectNotes",
+		"total": 35
+	}
+]
