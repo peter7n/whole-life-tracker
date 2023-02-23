@@ -12,18 +12,41 @@ function App() {
   const submitDayHandler = (daySubmitData) => {
     console.log(daySubmitData);
     setDaySubmitted(true);
-    daysDataArray.unshift(daySubmitData);
-    setDaysDataArray(daysDataArray);
+    setDaysDataArray((prevArray) => {
+      return [daySubmitData, ...prevArray];
+    })
+    // daysDataArray.unshift(daySubmitData);
+    // setDaysDataArray(daysDataArray);
   }
   
+  // useEffect(() => {
+  //   fetch('http://localhost:3001/api')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setDaysDataArray(data);
+  //       console.log(data);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    fetch('./data.json')
-    .then((res) => res.json())
-    .then((data) => {
-      setDaysDataArray(data);
-      console.log(data);
-    });
-  }, []);
+    console.log(daysDataArray.length);
+    if (daysDataArray.length > 0) {
+      fetch('http://localhost:3001/post', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(daysDataArray)
+    })
+      .then((res) => res.json())
+      .then ((data) => {
+        console.log('Success', data);
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+      // .then()
+      // .catch(err);
+    }
+  }, [daysDataArray]);
 
   return (
     <Fragment>
