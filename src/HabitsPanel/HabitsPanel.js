@@ -51,8 +51,10 @@ const HabitsPanel = (props) => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 		const totalScore = nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore;
+		// let idDate = Date.now();
 		const dayData = {
-			date: 'Feb. 8, 2023',
+			// id: idDate,
+			date: props.date,
 			nutrition: nutritionScore,
 			nutrition_noncompliant: nutritionFoodArray,
 			exercise: exerciseScore,

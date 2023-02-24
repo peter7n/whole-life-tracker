@@ -1,9 +1,20 @@
 import DatePicker from './DatePicker';
+import { useEffect } from 'react';
 
-const DateBar = () => {
+const DateBar = (props) => {
+	let currentDate = new Date();
+	let day = String(currentDate.getDate()).padStart(2, '0');
+	let month = String(currentDate.getMonth() + 1).padStart(2, '0');
+	let year = currentDate.getFullYear().toString();
+	let dateId = year + month + day;
+
+	useEffect(() => {
+		props.receiveDate(dateId);
+	}, [dateId, props]);
+
 	return (
 		<div>
-			<p>January 29, 2023</p>
+			<p>{year}.{month}.{day}</p>
 			<DatePicker />
 		</div>
 	);

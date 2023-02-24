@@ -1,8 +1,21 @@
 const HabitsHistory = (props) => {
-  // let keyDate = Date.now();
+  let obj = props.data;
+  
+  const reverseArr = (arr) => {
+    let indexCounter = arr.length - 1;
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      newArr[i] = arr[indexCounter];
+      indexCounter--;
+    }
+    return newArr;
+  }
+
+  const objVals = Object.values(obj);
+  const revObjVals = reverseArr(objVals);
 
   return (
-		props.data.map((entry, i) => 
+		revObjVals.map((entry, i) => 
       <p key={i}>
         {entry.date}<br />
         Nutrition: {entry.nutrition}<br />

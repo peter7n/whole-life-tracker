@@ -6,53 +6,56 @@ import HabitsPanel from './HabitsPanel/HabitsPanel';
 import HabitsHistory from './HabitsHistory/HabitsHistory';
 
 function App() {
-  const [daysDataArray, setDaysDataArray] = useState([]);
+  const [daysDataObject, setDaysDataObject] = useState({});
+  const [daysExistingData, setDaysExistingData] = useState({});
   const [daySubmitted, setDaySubmitted] = useState(false);
+  const [currentDateId, setCurrentDateId] = useState('');
   
   const submitDayHandler = (daySubmitData) => {
     console.log(daySubmitData);
     setDaySubmitted(true);
-    setDaysDataArray((prevArray) => {
-      return [daySubmitData, ...prevArray];
-    })
-    // daysDataArray.unshift(daySubmitData);
-    // setDaysDataArray(daysDataArray);
+    setDaysDataObject(daySubmitData);
+    // daysDataObject.unshift(daySubmitData);
+    // setDaysDataObject(daysDataObject);
   }
   
   // useEffect(() => {
   //   fetch('http://localhost:3001/api')
   //     .then((res) => res.json())
   //     .then((data) => {
-  //       setDaysDataArray(data);
+  //       setDaysDataObject(data);
   //       console.log(data);
   //   });
   // }, []);
 
   useEffect(() => {
-    console.log(daysDataArray.length);
-    if (daysDataArray.length > 0) {
-      fetch('http://localhost:3001/post', {
+    if (Object.keys(daysDataObject).length !== 0) {
+      fetch('http://localhost:3001/post/' + currentDateId, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(daysDataArray)
+      body: JSON.stringify(daysDataObject)
     })
       .then((res) => res.json())
       .then ((data) => {
         console.log('Success', data);
+        setDaysExistingData(data);
       })
       .catch((error) => {
         console.log("Error:", error);
       });
-      // .then()
-      // .catch(err);
     }
-  }, [daysDataArray]);
+  }, [daysDataObject, currentDateId]);
+
+  const DateHandler = (dateId) => {
+    console.log('in app.js ' + dateId);
+    setCurrentDateId(dateId);
+  }
 
   return (
     <Fragment>
-      <DateBar />
-      {!daySubmitted && <HabitsPanel onSubmitDay={submitDayHandler} />}
-      {daySubmitted && <HabitsHistory data={daysDataArray} />}
+      <DateBar receiveDate={DateHandler} />
+      {!daySubmitted && <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />}
+      {daySubmitted && <HabitsHistory data={daysExistingData} />}
     </Fragment>
   );
 }
