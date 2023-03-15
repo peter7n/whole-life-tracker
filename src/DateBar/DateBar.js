@@ -1,4 +1,5 @@
 import DatePicker from './DatePicker';
+import ViewPicker from './ViewPicker';
 import { useEffect } from 'react';
 
 const DateBar = (props) => {
@@ -16,6 +17,7 @@ const DateBar = (props) => {
 		<div>
 			<p>{year}.{month}.{day}</p>
 			<DatePicker />
+			<ViewPicker />
 		</div>
 	);
 }

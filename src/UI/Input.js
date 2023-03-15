@@ -25,11 +25,9 @@ const Input = (props) => {
 		<div>
 			<label htmlFor={props.id}>{props.label}</label>
 			<select name={props.id} id={props.id} value={props.value} onChange={props.onChange}>
-				<option value="-1">-1</option>
-				<option value="-2">-2</option>
-				<option value="-3">-3</option>
-				<option value="-4">-4</option>
-				<option value="-5">-5</option>
+				{props.valueOptions && props.valueOptions.map((val, i) =>
+					<option key={i}>{val}</option>
+				)}
 			</select>
 		</div>;
 

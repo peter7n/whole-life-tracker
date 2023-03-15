@@ -35,6 +35,7 @@ const TrackingRow = (props) => {
 	const buttonClickHandler = (event) => {
 		event.preventDefault(); // prevent form submission
 		props.buttonOnClick(selectSelected, enteredText);
+		setEnteredText('');		// clear text field
 	}
 
 	let checkboxInput = '';
@@ -61,12 +62,14 @@ const TrackingRow = (props) => {
 				onChange={textAreaInputHandler} />;
 	}
 	if (props.select !== undefined && props.select.show) {
+		const valOpt = ['-1', '-2', '-3', '-4', '-5'];
 		selectInput =
 			<Input
 				type="select"
 				id={props.select.id}
 				label={props.select.label}
 				value={selectSelected}
+				valueOptions={valOpt}
 				onChange={selectInputHandler} />;
 	}
 	if (props.text !== undefined && props.text.show) {

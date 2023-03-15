@@ -30,7 +30,8 @@ function App() {
 
   useEffect(() => {
     if (Object.keys(daysDataObject).length !== 0) {
-      fetch('http://localhost:3001/post/' + currentDateId, {
+      fetch('https://masterptn.org:3000/post-data/' + currentDateId, {
+      // fetch('http://localhost:3001/post-data/' + currentDateId, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(daysDataObject)
