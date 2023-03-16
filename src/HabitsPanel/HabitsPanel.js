@@ -76,11 +76,11 @@ const HabitsPanel = (props) => {
 			points: pointsSelected,
 			food: enteredFood
 		};
-		let updatedArray = [foodEntry, ...foodArray];
+		let updatedArray = [...foodArray, foodEntry];
 		// let updatedPoints = nutritionPoints + +pointsSelected;
 
 		setFoodArray((prevFoodArray) => {
-			return [foodEntry, ...prevFoodArray];
+			return [...prevFoodArray, foodEntry];
 		});
 		// setNutritionPoints(updatedPoints);
 		scoreUpdateHandler('Nutrition', +pointsSelected, updatedArray);
@@ -90,7 +90,7 @@ const HabitsPanel = (props) => {
 		<form onSubmit={submitHandler}>
 			<TrackingRow 
 				name="Nutrition"
-				select={ {show: true, label: 'Pts', id: 'nutrition-select'} }
+				select={ {show: true, label: 'Pts', id: 'nutrition-select', value: '-1'} }
 				text={ {show: true, label: 'Food', id: 'nutrition-text'} }
 				button= { {show: true, label: 'Add'} }
 				buttonOnClick = {nutritionAddHandler}

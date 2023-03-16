@@ -4,9 +4,9 @@ import Input from '../UI/Input';
 
 const TrackingRow = (props) => {
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
-	// const [enteredTextArea, setEnteredTextArea] = useState('');
+	const [enteredTextArea, setEnteredTextArea] = useState('');
 	const [enteredText, setEnteredText] = useState('');
-	const [selectSelected, setSelectSelected] = useState('-1');
+	const [selectSelected, setSelectSelected] = useState((props.select !== undefined) ? props.select.value : ''); 	// set initial select value to value passed through props
 	
 	const checkboxHandler = () => {
 		if (!checkboxChecked) {
@@ -19,7 +19,7 @@ const TrackingRow = (props) => {
 	}
 
 	const textAreaInputHandler = (event) => {
-		// setEnteredTextArea(event.target.value);
+		setEnteredTextArea(event.target.value);
 		props.onScoreUpdate(props.name, 0, event.target.value);
 	}
 
@@ -50,6 +50,7 @@ const TrackingRow = (props) => {
 				type="checkbox"
 				label={props.checkbox.label}
 				id={props.checkbox.id}
+				value={checkboxChecked}
 				onChange={checkboxHandler} />;
 	}
 	if (props.textarea !== undefined && props.textarea.show) {
@@ -58,7 +59,7 @@ const TrackingRow = (props) => {
 				type="textarea"
 				label={props.textarea.label}
 				id={props.textarea.id}
-				// value={enteredTextArea}
+				value={enteredTextArea}
 				onChange={textAreaInputHandler} />;
 	}
 	if (props.select !== undefined && props.select.show) {

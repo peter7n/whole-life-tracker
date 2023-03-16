@@ -29,6 +29,7 @@ function App() {
   //   });
   // }, []);
 
+  // post entry with specified date
   useEffect(() => {
     if (Object.keys(daysDataObject).length !== 0) {
       fetch('https://masterptn.org:3000/post-data/' + currentDateId, {
@@ -48,6 +49,7 @@ function App() {
     }
   }, [daysDataObject, currentDateId]);
 
+  // fetch all entries
   useEffect(() => {
     if (currentView === 'All') {
       fetch('https://masterptn.org:3000/get-data/')
