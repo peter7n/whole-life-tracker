@@ -1,6 +1,6 @@
 import DatePicker from './DatePicker';
 import ViewPicker from './ViewPicker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const DateBar = (props) => {
 	let currentDate = new Date();
@@ -9,15 +9,24 @@ const DateBar = (props) => {
 	let year = currentDate.getFullYear().toString();
 	let dateId = year + month + day;
 
+	const [viewVal, setViewVal] = useState('');
+	const viewPasserHandler = (val) => {
+		setViewVal(val);
+	}
+
 	useEffect(() => {
 		props.receiveDate(dateId);
 	}, [dateId, props]);
+
+	useEffect(() => {
+		props.receiveView(viewVal);
+	}, [viewVal, props]);
 
 	return (
 		<div>
 			<p>{year}.{month}.{day}</p>
 			<DatePicker />
-			<ViewPicker />
+			<ViewPicker onViewChange={viewPasserHandler} />
 		</div>
 	);
 }

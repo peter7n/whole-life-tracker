@@ -10,6 +10,7 @@ function App() {
   const [daysExistingData, setDaysExistingData] = useState({});
   const [daySubmitted, setDaySubmitted] = useState(false);
   const [currentDateId, setCurrentDateId] = useState('');
+  const [currentView, setCurrentView] = useState('');
   
   const submitDayHandler = (daySubmitData) => {
     console.log(daySubmitData);
@@ -47,16 +48,40 @@ function App() {
     }
   }, [daysDataObject, currentDateId]);
 
+  useEffect(() => {
+    if (currentView === 'All') {
+      fetch('https://masterptn.org:3000/get-data/')
+      .then((res) => res.json())
+      .then((data) => {
+        setDaysExistingData(data);
+        console.log(data);
+    });
+    }
+  }, [currentView]);
+
   const DateHandler = (dateId) => {
     console.log('in app.js ' + dateId);
     setCurrentDateId(dateId);
+  };
+
+  const viewHandler = (viewValue) => {
+    console.log('in app.js' + viewValue);
+    setCurrentView(viewValue);
+  };
+
+  let viewContent = '';
+  if (currentView === 'All') {
+    viewContent = <HabitsHistory data={daysExistingData} />;
+  } else if (daySubmitted) {
+    viewContent = <p>Congrats! You submitted</p>;
+  } else {
+    viewContent = <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />;
   }
 
   return (
     <Fragment>
-      <DateBar receiveDate={DateHandler} />
-      {!daySubmitted && <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />}
-      {daySubmitted && <HabitsHistory data={daysExistingData} />}
+      <DateBar receiveDate={DateHandler} receiveView={viewHandler} />
+      {viewContent}
     </Fragment>
   );
 }
