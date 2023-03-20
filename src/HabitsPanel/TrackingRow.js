@@ -4,27 +4,31 @@ import Input from '../UI/Input';
 
 const TrackingRow = (props) => {
 	let existingTextArea = '';
+	let existingChecked = false;
 	if (props.textarea !== undefined) {
-		console.log('yyy:' + props.name);
-		console.log(props.textarea.initTextArea);
 		existingTextArea = props.textarea.initTextArea;
 	}
+	if (props.checkbox !== undefined) {
+		existingChecked = props.checkbox.initChecked;
+	}
+	let checkboxInput = '';
+	let textareaInput = '';
+	let textInput = '';
+	let selectInput ='';
+	let buttonInput = '';
+	let npDisplay = '';
+
+	// == States ==
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
 	const [enteredTextArea, setEnteredTextArea] = useState('');
 	const [enteredText, setEnteredText] = useState('');
 	const [selectSelected, setSelectSelected] = useState((props.select !== undefined) ? props.select.value : ''); 	// set initial select value to value passed through props
-	
+
+	// == Handlers ==
 	const checkboxHandler = () => {
-		// if local state and parent state are both not checked, then set checked
-		if (!checkboxChecked && !props.checkbox.checked) {
+		if (!checkboxChecked) {
 			setCheckboxChecked(true);
-			// props.checkbox.onCheckboxChange(true);
 			props.onScoreUpdate(props.name, 5);
-		// else if local state is not checked and parent state is checked, set parent state to not checked
-		} else if (!checkboxChecked && props.checkbox.checked) {
-			props.checkbox.onCheckboxChange(props.name, false) // create a prop to set parent state
-			props.onScoreUpdate(props.name, -5)
-		// else set local state to unchecked
 		} else {
 			setCheckboxChecked(false);
 			props.onScoreUpdate(props.name, -5);
@@ -51,24 +55,25 @@ const TrackingRow = (props) => {
 		setEnteredText('');		// clear text field
 	}
 
+	// Set initial checkbox and textarea states to existing fetch data (passed from parent component)
 	useEffect(() => {
 		setEnteredTextArea(existingTextArea);
 		console.log('changing textarea to initTextArea');
 	}, [existingTextArea]);
 
-	let checkboxInput = '';
-	let textareaInput = '';
-	let textInput = '';
-	let selectInput ='';
-	let buttonInput = '';
-	let npDisplay = '';
+	useEffect(() => {
+		setCheckboxChecked(existingChecked);
+		console.log('changing checked to existing check state')
+	}, [existingChecked]);
+
+	// Set rendered content
 	if (props.checkbox !== undefined && props.checkbox.show) {
 		checkboxInput =
 			<Input
 				type="checkbox"
 				label={props.checkbox.label}
 				id={props.checkbox.id}
-				checked={checkboxChecked || props.checkbox.checked}
+				checked={checkboxChecked}
 				onChange={checkboxHandler} 
 			/>;
 	}

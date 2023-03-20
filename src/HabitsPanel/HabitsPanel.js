@@ -196,39 +196,39 @@ const HabitsPanel = (props) => {
 			/>
 			<TrackingRow
 				name="Exercise"
-				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', checked: exerciseCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck, onCheckboxChange: checkboxChangeHandler} }
 				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={exerciseScore}
 			/>			
 			<TrackingRow
 				name="Mobilize"
-				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', checked: mobilizeCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck, onCheckboxChange: checkboxChangeHandler} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={mobilizeScore}
 			/>			
 			<TrackingRow
 				name="Sleep"
-				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', checked: sleepCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', initChecked: sleepCheck, onCheckboxChange: checkboxChangeHandler} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={sleepScore}
 			/>			
 			<TrackingRow
 				name="Hydrate"
-				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', checked: hydrateCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', initChecked: hydrateCheck, onCheckboxChange: checkboxChangeHandler} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={hydrateScore}
 			/>
 			<TrackingRow
 				name="Well-Being"
-				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', checked: wellbeingCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', initChecked: wellbeingCheck, onCheckboxChange: checkboxChangeHandler} }
 				textarea={ {show: true, label: 'Notes', id: 'well-being-text', initTextArea: initWellbeingNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={wellBeingScore}
 			/>
 			<TrackingRow
 				name="Reflect"
-				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', checked: reflectCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', initChecked: reflectCheck, onCheckboxChange: checkboxChangeHandler} }
 				textarea={ {show: true, label: 'Notes', id: 'reflect-text', initTextArea: initReflectNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={reflectScore}
