@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 // import NutritionRow from './NutritionRow';
 // import ExerciseRow from './ExerciseRow';
 // import MobilizeRow from './MobilizeRow';
@@ -10,6 +10,13 @@ import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import TrackingRow from './TrackingRow';
 
 const HabitsPanel = (props) => {
+	let fetchUrl = 'https://masterptn.org:3000';
+	const fetchUrlDev = 'http://localhost:3001';
+	let devMode = true;   // edit for dev or prod server
+ 
+	if (devMode) {
+	  fetchUrl = fetchUrlDev;
+	}
 	const [nutritionScore, setNutritionScore] = useState(5);
 	const [nutritionFoodArray, setNutritionFoodArray] = useState([]);
 	const [exerciseScore, setExerciseScore] = useState(0);
@@ -21,9 +28,23 @@ const HabitsPanel = (props) => {
 	const [wellBeingNotes, setWebllBeingNotes] = useState('');
 	const [reflectScore, setReflectScore] = useState(0);
 	const [reflectNotes, setReflectNotes] = useState('');
+
+	// checkbox control to set state on data load
+	const [exerciseCheck, setExerciseCheck] = useState(false);
+	const [mobilizeCheck, setMobilizeCheck] = useState(false);
+	const [sleepCheck, setSleepCheck] = useState(false);
+	const [hydrateCheck, setHydrateCheck] = useState(false);
+	const [wellbeingCheck, setWellBeingCheck] = useState(false);
+	const [reflectCheck, setReflectCheck] = useState(false);
+
+	const [initExerciseNotes, setInitExerciseNotes] = useState('');
+	const [initWellbeingNotes, setInitWellbeingNotes] = useState('');
+	const [initReflectNotes, setInitReflectNotes] = useState('');
+
+	// const [existingDayData, setExistingDayData] = useState({});
 	
 	// Specific states for Nutrition tracker
-	const [foodArray, setFoodArray] = useState([]);
+	const [tempFoodArray, setTempFoodArray] = useState([]);
 	// const [nutritionPoints, setNutritionPoints] = useState(5);
 
 	const scoreUpdateHandler = (habit, points, data) => {
@@ -76,15 +97,91 @@ const HabitsPanel = (props) => {
 			points: pointsSelected,
 			food: enteredFood
 		};
-		let updatedArray = [...foodArray, foodEntry];
+		let updatedArray = [...tempFoodArray, foodEntry];
 		// let updatedPoints = nutritionPoints + +pointsSelected;
 
-		setFoodArray((prevFoodArray) => {
+		setTempFoodArray((prevFoodArray) => {
 			return [...prevFoodArray, foodEntry];
 		});
 		// setNutritionPoints(updatedPoints);
 		scoreUpdateHandler('Nutrition', +pointsSelected, updatedArray);
 	};
+
+	const checkboxChangeHandler = (habit, state) => {
+		switch (habit) {
+			case 'Exercise':
+				setExerciseCheck(state);
+				break;
+			case 'Mobilize':
+				setMobilizeCheck(state);
+				break;
+			case 'Sleep':
+				setSleepCheck(state);
+				break;
+			case 'Hydrate':
+				setHydrateCheck(state);
+				break;
+			case 'Well-Being':
+				setWellBeingCheck(state);
+				break;
+			case 'Reflect':
+				setReflectCheck(state);
+				break;
+			default:
+				throw new Error('Unhandled habit.');
+		}
+	}
+
+	// fetch data for today's date
+	useEffect(() => {
+		if (props.date) {
+			fetch(fetchUrl + '/get-data/' + props.date)
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.date) {
+					console.log('entry exists');
+					// setExistingDayData(data);
+					setNutritionScore(data.nutrition);
+					setNutritionFoodArray(data.nutrition_noncompliant);
+					if (data.exercise) {
+						setExerciseScore(data.exercise);
+						setExerciseCheck(true);
+						setExerciseNotes(data.exercise_notes);
+						setInitExerciseNotes(data.exercise_notes);
+					}
+					if (data.mobilize) {
+						setMobilizeScore(data.mobilize);
+						setMobilizeCheck(true);
+					}
+					if (data.sleep) {
+						setSleepScore(data.sleep);
+						setSleepCheck(true);
+					}
+					if (data.hydrate) {
+						setHydrateScore(data.hydrate);
+						setHydrateCheck(true);
+					}
+					if (data.wellbeing) {
+						setWellBeingScore(data.wellbeing);
+						setWellBeingCheck(true);
+						setWebllBeingNotes(data.wellbeing_notes);
+						setInitWellbeingNotes(data.wellbeing_notes);
+					}
+					if (data.reflect) {
+						setReflectScore(data.reflect);
+						setReflectCheck(true);
+						setReflectNotes(data.reflect_notes);
+						setInitReflectNotes(data.reflect_notes);
+					}
+				} else {
+					console.log('entry not found');
+				}
+
+				console.log('getting current date:');
+				console.log(data);
+			});
+		}
+	}, [props.date, fetchUrl]);
 
 	return (
 		<form onSubmit={submitHandler}>
@@ -99,31 +196,43 @@ const HabitsPanel = (props) => {
 			/>
 			<TrackingRow
 				name="Exercise"
-				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check'} }
-				textarea={ {show: true, label: 'Notes', id: 'exercise-text'} }
-				onScoreUpdate={scoreUpdateHandler} />			
+				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', checked: exerciseCheck, onCheckboxChange: checkboxChangeHandler} }
+				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={exerciseScore}
+			/>			
 			<TrackingRow
 				name="Mobilize"
-				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check'} }
-				onScoreUpdate={scoreUpdateHandler} />			
+				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', checked: mobilizeCheck, onCheckboxChange: checkboxChangeHandler} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={mobilizeScore}
+			/>			
 			<TrackingRow
 				name="Sleep"
-				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check'} }
-				onScoreUpdate={scoreUpdateHandler} />			
+				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', checked: sleepCheck, onCheckboxChange: checkboxChangeHandler} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={sleepScore}
+			/>			
 			<TrackingRow
 				name="Hydrate"
-				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check'} }
-				onScoreUpdate={scoreUpdateHandler} />
+				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', checked: hydrateCheck, onCheckboxChange: checkboxChangeHandler} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={hydrateScore}
+			/>
 			<TrackingRow
 				name="Well-Being"
-				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check'} }
-				textarea={ {show: true, label: 'Notes', id: 'well-being-text'} }
-				onScoreUpdate={scoreUpdateHandler} />
+				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', checked: wellbeingCheck, onCheckboxChange: checkboxChangeHandler} }
+				textarea={ {show: true, label: 'Notes', id: 'well-being-text', initTextArea: initWellbeingNotes} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={wellBeingScore}
+			/>
 			<TrackingRow
 				name="Reflect"
-				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check'} }
-				textarea={ {show: true, label: 'Notes', id: 'reflect-text'} }
-				onScoreUpdate={scoreUpdateHandler} />
+				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', checked: reflectCheck, onCheckboxChange: checkboxChangeHandler} }
+				textarea={ {show: true, label: 'Notes', id: 'reflect-text', initTextArea: initReflectNotes} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={reflectScore}
+			/>
 			<button type="submit">Submit</button>
 			<ScoreDisplay score={nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore} />
 		</form>

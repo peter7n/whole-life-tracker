@@ -1,17 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HabitRowWrapper from '../UI/HabitRowWrapper';
 import Input from '../UI/Input';
 
 const TrackingRow = (props) => {
+	let existingTextArea = '';
+	if (props.textarea !== undefined) {
+		console.log('yyy:' + props.name);
+		console.log(props.textarea.initTextArea);
+		existingTextArea = props.textarea.initTextArea;
+	}
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
 	const [enteredTextArea, setEnteredTextArea] = useState('');
 	const [enteredText, setEnteredText] = useState('');
 	const [selectSelected, setSelectSelected] = useState((props.select !== undefined) ? props.select.value : ''); 	// set initial select value to value passed through props
 	
 	const checkboxHandler = () => {
-		if (!checkboxChecked) {
+		// if local state and parent state are both not checked, then set checked
+		if (!checkboxChecked && !props.checkbox.checked) {
 			setCheckboxChecked(true);
+			// props.checkbox.onCheckboxChange(true);
 			props.onScoreUpdate(props.name, 5);
+		// else if local state is not checked and parent state is checked, set parent state to not checked
+		} else if (!checkboxChecked && props.checkbox.checked) {
+			props.checkbox.onCheckboxChange(props.name, false) // create a prop to set parent state
+			props.onScoreUpdate(props.name, -5)
+		// else set local state to unchecked
 		} else {
 			setCheckboxChecked(false);
 			props.onScoreUpdate(props.name, -5);
@@ -38,6 +51,11 @@ const TrackingRow = (props) => {
 		setEnteredText('');		// clear text field
 	}
 
+	useEffect(() => {
+		setEnteredTextArea(existingTextArea);
+		console.log('changing textarea to initTextArea');
+	}, [existingTextArea]);
+
 	let checkboxInput = '';
 	let textareaInput = '';
 	let textInput = '';
@@ -50,8 +68,9 @@ const TrackingRow = (props) => {
 				type="checkbox"
 				label={props.checkbox.label}
 				id={props.checkbox.id}
-				value={checkboxChecked}
-				onChange={checkboxHandler} />;
+				checked={checkboxChecked || props.checkbox.checked}
+				onChange={checkboxHandler} 
+			/>;
 	}
 	if (props.textarea !== undefined && props.textarea.show) {
 		textareaInput = 
@@ -97,7 +116,7 @@ const TrackingRow = (props) => {
 			{selectInput}
 			{textInput}
 			{buttonInput}
-			{checkboxChecked && <p>+5</p>}
+			{checkboxChecked}
 			{npDisplay}
 		</HabitRowWrapper>
 	);

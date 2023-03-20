@@ -11,6 +11,14 @@ function App() {
   const [daySubmitted, setDaySubmitted] = useState(false);
   const [currentDateId, setCurrentDateId] = useState('');
   const [currentView, setCurrentView] = useState('');
+
+  let fetchUrl = 'https://masterptn.org:3000';
+  const fetchUrlDev = 'http://localhost:3001';
+  let devMode = true;   // edit for dev or prod server
+
+  if (devMode) {
+    fetchUrl = fetchUrlDev;
+  }
   
   const submitDayHandler = (daySubmitData) => {
     console.log(daySubmitData);
@@ -32,8 +40,7 @@ function App() {
   // post entry with specified date
   useEffect(() => {
     if (Object.keys(daysDataObject).length !== 0) {
-      fetch('https://masterptn.org:3000/post-data/' + currentDateId, {
-      // fetch('http://localhost:3001/post-data/' + currentDateId, {
+      fetch(fetchUrl + '/post-data/' + currentDateId, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(daysDataObject)
@@ -47,19 +54,19 @@ function App() {
         console.log("Error:", error);
       });
     }
-  }, [daysDataObject, currentDateId]);
+  }, [daysDataObject, currentDateId, fetchUrl]);
 
   // fetch all entries
   useEffect(() => {
     if (currentView === 'All') {
-      fetch('https://masterptn.org:3000/get-data/')
+      fetch(fetchUrl + '/get-data/')
       .then((res) => res.json())
       .then((data) => {
         setDaysExistingData(data);
         console.log(data);
     });
     }
-  }, [currentView]);
+  }, [currentView, fetchUrl]);
 
   const DateHandler = (dateId) => {
     console.log('in app.js ' + dateId);
