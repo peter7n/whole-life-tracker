@@ -44,13 +44,13 @@ const HabitsPanel = (props) => {
 	// const [existingDayData, setExistingDayData] = useState({});
 	
 	// Specific states for Nutrition tracker
-	const [tempFoodArray, setTempFoodArray] = useState([]);
+	// const [tempFoodArray, setTempFoodArray] = useState([]);
 	// const [nutritionPoints, setNutritionPoints] = useState(5);
+	const [isFoodEntered, setIsFoodEntered] = useState(false);
 
 	const scoreUpdateHandler = (habit, points, data) => {
 		if (habit === 'Nutrition') {
 			setNutritionScore(nutritionScore + points);
-			setNutritionFoodArray(data);
 		} else if (habit === 'Exercise') {
 			setExerciseScore(exerciseScore + points);
 			setExerciseNotes(data);
@@ -97,14 +97,19 @@ const HabitsPanel = (props) => {
 			points: pointsSelected,
 			food: enteredFood
 		};
-		let updatedArray = [...tempFoodArray, foodEntry];
+		// let updatedArray = [...tempFoodArray, foodEntry];
 		// let updatedPoints = nutritionPoints + +pointsSelected;
 
-		setTempFoodArray((prevFoodArray) => {
-			return [...prevFoodArray, foodEntry];
-		});
+		// setTempFoodArray((prevFoodArray) => {
+		// 	return [...prevFoodArray, foodEntry];
+		// });
 		// setNutritionPoints(updatedPoints);
-		scoreUpdateHandler('Nutrition', +pointsSelected, updatedArray);
+		setNutritionFoodArray((prevArr) => {
+			return [...prevArr, foodEntry];
+		});
+		scoreUpdateHandler('Nutrition', +pointsSelected);
+
+		setIsFoodEntered(true);
 	};
 
 	const checkboxChangeHandler = (habit, state) => {
@@ -142,7 +147,9 @@ const HabitsPanel = (props) => {
 					console.log('entry exists');
 					// setExistingDayData(data);
 					setNutritionScore(data.nutrition);
+					// setTempFoodArray(data.nutrition_noncompliant);
 					setNutritionFoodArray(data.nutrition_noncompliant);
+					setIsFoodEntered(true);
 					if (data.exercise) {
 						setExerciseScore(data.exercise);
 						setExerciseCheck(true);
@@ -183,6 +190,14 @@ const HabitsPanel = (props) => {
 		}
 	}, [props.date, fetchUrl]);
 
+	console.log('food array:' + nutritionFoodArray.length);
+	console.log(nutritionFoodArray);
+	if (nutritionFoodArray.length) {
+		console.log('true');
+	} else {
+		console.log('false');
+	}
+
 	return (
 		<form onSubmit={submitHandler}>
 			<TrackingRow 
@@ -194,6 +209,11 @@ const HabitsPanel = (props) => {
 				onScoreUpdate={scoreUpdateHandler}
 				np={nutritionScore}
 			/>
+			<div>
+				{isFoodEntered && nutritionFoodArray.map((item, i) => 
+					<p key={i}>{item.points} {item.food}</p>
+				)}
+			</div>
 			<TrackingRow
 				name="Exercise"
 				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck, onCheckboxChange: checkboxChangeHandler} }
