@@ -12,7 +12,7 @@ import TrackingRow from './TrackingRow';
 const HabitsPanel = (props) => {
 	let fetchUrl = 'https://masterptn.org:3000';
 	const fetchUrlDev = 'http://localhost:3001';
-	let devMode = false;   // edit for dev or prod server
+	let devMode = true;   // edit for dev or prod server
  
 	if (devMode) {
 	  fetchUrl = fetchUrlDev;
@@ -212,7 +212,7 @@ const HabitsPanel = (props) => {
 			<div className='row'>
 				<div className='col'>
 					<div className='card'>
-						<ul class="list-group list-group-flush">
+						<ul className="list-group list-group-flush">
 							{isFoodEntered && nutritionFoodArray.map((item, i) => 
 								<li className='list-group-item' key={i}>{item.points} {item.food}</li>
 							)}

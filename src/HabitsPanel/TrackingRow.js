@@ -113,7 +113,7 @@ const TrackingRow = (props) => {
 		buttonInput = <button className='btn btn-secondary mt-3' onClick={buttonClickHandler}>{props.button.label}</button>;
 	}
 	if (props.np !== undefined) {
-		npDisplay = <div className='mt-3' style={{fontSize: 30}}><p className='badge text-bg-success'>{props.np}</p></div>;
+		npDisplay = <div className='mt-3' style={{fontSize: 30}}><p className={`badge ${props.np > 4 ?'text-bg-success' : props.np < 1 ? 'text-bg-danger' : 'text-bg-secondary'}`}>{props.np}</p></div>;
 	}
 
 	return (
