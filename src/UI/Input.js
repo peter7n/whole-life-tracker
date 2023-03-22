@@ -4,27 +4,27 @@ const Input = (props) => {
 	let inputHtml = '';
 
 	const checkbox =
-		<div>
-			<label htmlFor={props.id}>{props.label}</label>
-			<input type="checkbox" id={props.id} name={props.id} onChange={props.onChange} checked={props.checked} />
+		<div className='form-check'>
+			<label className='form-check-label' htmlFor={props.id}>{props.label}</label>
+			<input className='form-check-input' type="checkbox" id={props.id} name={props.id} onChange={props.onChange} checked={props.checked} />
 		</div>;
 
 	const textarea =
-		<div>
-			<label htmlFor={props.id}>{props.label}</label>
-			<textarea id={props.id} name={props.id} onChange={props.onChange} value={props.value} ></textarea>
+		<div className='mt-3'>
+			<label className='form-label' htmlFor={props.id}>{props.label}</label>
+			<textarea className='form-control' rows='3' id={props.id} name={props.id} onChange={props.onChange} value={props.value} ></textarea>
 		</div>;
 
 	const text =
 		<div>
 			<label htmlFor={props.id}>{props.label}</label>
-			<input type="text" id={props.id} name={props.id} value={props.value} onChange={props.onChange} />
+			<input className='form-control' type="text" id={props.id} name={props.id} value={props.value} onChange={props.onChange} />
 		</div>;
 
 	const select =
 		<div>
 			<label htmlFor={props.id}>{props.label}</label>
-			<select name={props.id} id={props.id} value={props.value} onChange={props.onChange}>
+			<select className='form-select' name={props.id} id={props.id} value={props.value} onChange={props.onChange}>
 				{props.valueOptions && props.valueOptions.map((val, i) =>
 					<option key={i}>{val}</option>
 				)}
@@ -33,7 +33,7 @@ const Input = (props) => {
 
 	const submit =
 		<div>
-			<input type="submit" value="submit" id={props.id} />
+			<input className='btn btn-primary' type="submit" value="submit" id={props.id} />
 		</div>;
 
 	if (props.type === 'checkbox') {

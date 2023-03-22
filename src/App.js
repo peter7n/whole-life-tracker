@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import DateBar from './DateBar/DateBar';
 import HabitsPanel from './HabitsPanel/HabitsPanel';
@@ -88,10 +88,10 @@ function App() {
   }
 
   return (
-    <Fragment>
+    <div className='container'>
       <DateBar receiveDate={DateHandler} receiveView={viewHandler} />
       {viewContent}
-    </Fragment>
+    </div>
   );
 }
 

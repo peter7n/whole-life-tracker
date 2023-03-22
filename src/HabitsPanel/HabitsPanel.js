@@ -209,10 +209,16 @@ const HabitsPanel = (props) => {
 				onScoreUpdate={scoreUpdateHandler}
 				np={nutritionScore}
 			/>
-			<div>
-				{isFoodEntered && nutritionFoodArray.map((item, i) => 
-					<p key={i}>{item.points} {item.food}</p>
-				)}
+			<div className='row'>
+				<div className='col'>
+					<div className='card'>
+						<ul class="list-group list-group-flush">
+							{isFoodEntered && nutritionFoodArray.map((item, i) => 
+								<li className='list-group-item' key={i}>{item.points} {item.food}</li>
+							)}
+						</ul>
+					</div>
+				</div>
 			</div>
 			<TrackingRow
 				name="Exercise"
@@ -253,7 +259,7 @@ const HabitsPanel = (props) => {
 				onScoreUpdate={scoreUpdateHandler} 
 				np={reflectScore}
 			/>
-			<button type="submit">Submit</button>
+			<button type="submit" className='btn btn-primary'>Submit</button>
 			<ScoreDisplay score={nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore} />
 		</form>
 	);

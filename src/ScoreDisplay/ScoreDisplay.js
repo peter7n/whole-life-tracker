@@ -1,7 +1,7 @@
 const ScoreDisplay = (props) => {
 	return (
-		<div>
-			<p>Total: {props.score}</p>
+		<div className="mt-3">
+			<p className='badge text-bg-success' style={{fontSize: 20}}>Total: {props.score}</p>
 		</div>
 	);
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import HabitRowWrapper from '../UI/HabitRowWrapper';
+// import HabitRowWrapper from '../UI/HabitRowWrapper';
 import Input from '../UI/Input';
 
 const TrackingRow = (props) => {
@@ -17,6 +17,9 @@ const TrackingRow = (props) => {
 	let selectInput ='';
 	let buttonInput = '';
 	let npDisplay = '';
+	// const badgeStyle = {
+	// 	font-size: '20px';
+	// };
 
 	// == States ==
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
@@ -107,23 +110,23 @@ const TrackingRow = (props) => {
 				onChange={textInputHandler} />;
 	}
 	if (props.button !== undefined && props.button.show) {
-		buttonInput = <button onClick={buttonClickHandler}>{props.button.label}</button>;
+		buttonInput = <button className='btn btn-secondary mt-3' onClick={buttonClickHandler}>{props.button.label}</button>;
 	}
 	if (props.np !== undefined) {
-		npDisplay = <p>{props.np}</p>;
+		npDisplay = <div className='mt-3' style={{fontSize: 30}}><p className='badge text-bg-success'>{props.np}</p></div>;
 	}
 
 	return (
-		<HabitRowWrapper>
-			<h2>{props.name}</h2>
-			{checkboxInput}
-			{textareaInput}
-			{selectInput}
-			{textInput}
-			{buttonInput}
+		<div className='row mt-3'>
+			<div className='col-xsm-12'><h2>{props.name}</h2></div>
+			<div className='col-xsm-12'>{checkboxInput}</div>
+			<div className='col-xsm-12'>{textareaInput}</div>
+			<div className='col'>{selectInput}</div>
+			<div className='col'>{textInput}</div>
+			<div className=''>{buttonInput}</div>
 			{checkboxChecked}
 			{npDisplay}
-		</HabitRowWrapper>
+		</div>
 	);
 }
 

@@ -23,7 +23,7 @@ const DateBar = (props) => {
 	}, [viewVal, props]);
 
 	return (
-		<div>
+		<div className='row mb-3'>
 			<p>{year}.{month}.{day}</p>
 			<DatePicker />
 			<ViewPicker onViewChange={viewPasserHandler} />
