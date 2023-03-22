@@ -12,7 +12,7 @@ import TrackingRow from './TrackingRow';
 const HabitsPanel = (props) => {
 	let fetchUrl = 'https://masterptn.org:3000';
 	const fetchUrlDev = 'http://localhost:3001';
-	let devMode = true;   // edit for dev or prod server
+	let devMode = false;   // edit for dev or prod server
  
 	if (devMode) {
 	  fetchUrl = fetchUrlDev;
