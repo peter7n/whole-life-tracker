@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 // import HabitRowWrapper from '../UI/HabitRowWrapper';
 import Input from '../UI/Input';
+import TextArea from '../UI/TextArea';
+import Select from '../UI/Select';
 
 const TrackingRow = (props) => {
 	let existingTextArea = '';
@@ -82,23 +84,23 @@ const TrackingRow = (props) => {
 	}
 	if (props.textarea !== undefined && props.textarea.show) {
 		textareaInput = 
-			<Input
-				type="textarea"
+			<TextArea
 				label={props.textarea.label}
 				id={props.textarea.id}
 				value={enteredTextArea}
-				onChange={textAreaInputHandler} />;
+				onChange={textAreaInputHandler} 
+			/>;
 	}
 	if (props.select !== undefined && props.select.show) {
 		const valOpt = ['-1', '-2', '-3', '-4', '-5'];
 		selectInput =
-			<Input
-				type="select"
+			<Select
 				id={props.select.id}
 				label={props.select.label}
 				value={selectSelected}
 				valueOptions={valOpt}
-				onChange={selectInputHandler} />;
+				onChange={selectInputHandler} 
+			/>;
 	}
 	if (props.text !== undefined && props.text.show) {
 		textInput = 
