@@ -1,4 +1,4 @@
-import Input from "../UI/Input";
+import Select from "../UI/Select";
 import { useState } from "react";
 
 const ViewPicker = (props) => {
@@ -13,8 +13,7 @@ const ViewPicker = (props) => {
 	
 	return (
 		<form>
-			<Input
-				type="select"
+			<Select
 				id="view"
 				label="View Entries"
 				value={selectedView}

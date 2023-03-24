@@ -31,6 +31,8 @@ const HabitsPanel = (props) => {
 
 	// checkbox control to set state on data load
 	const [exerciseCheck, setExerciseCheck] = useState(false);
+	// const [radio1Check, setRadio1Check] = useState(false);
+	// const [radio2Check, setRadio2Check] = useState(false);
 	const [mobilizeCheck, setMobilizeCheck] = useState(false);
 	const [sleepCheck, setSleepCheck] = useState(false);
 	const [hydrateCheck, setHydrateCheck] = useState(false);
@@ -54,6 +56,8 @@ const HabitsPanel = (props) => {
 		} else if (habit === 'Exercise') {
 			setExerciseScore(exerciseScore + points);
 			setExerciseNotes(data);
+			// setRadio1Check(data.radio1);
+			// setRadio2Check(data.radio2);
 		} else if (habit === 'Mobilize') {
 			setMobilizeScore(mobilizeScore + points);
 		} else if (habit === 'Sleep') {
@@ -112,31 +116,6 @@ const HabitsPanel = (props) => {
 		setIsFoodEntered(true);
 	};
 
-	const checkboxChangeHandler = (habit, state) => {
-		switch (habit) {
-			case 'Exercise':
-				setExerciseCheck(state);
-				break;
-			case 'Mobilize':
-				setMobilizeCheck(state);
-				break;
-			case 'Sleep':
-				setSleepCheck(state);
-				break;
-			case 'Hydrate':
-				setHydrateCheck(state);
-				break;
-			case 'Well-Being':
-				setWellBeingCheck(state);
-				break;
-			case 'Reflect':
-				setReflectCheck(state);
-				break;
-			default:
-				throw new Error('Unhandled habit.');
-		}
-	}
-
 	// fetch data for today's date
 	useEffect(() => {
 		if (props.date) {
@@ -153,6 +132,7 @@ const HabitsPanel = (props) => {
 					if (data.exercise) {
 						setExerciseScore(data.exercise);
 						setExerciseCheck(true);
+						// setRadio1Check(true);
 						setExerciseNotes(data.exercise_notes);
 						setInitExerciseNotes(data.exercise_notes);
 					}
@@ -220,41 +200,48 @@ const HabitsPanel = (props) => {
 					</div>
 				</div>
 			</div>
+			{/* <TrackingRow
+				name="Exercise"
+				radio={ {show: true, name: 'exercise-radio', label1: 'Yes', label2: 'No', id1: 'yes', id2: 'no', initRadio1: radio1Check, initRadio2: radio2Check} }
+				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
+				onScoreUpdate={scoreUpdateHandler} 
+				np={exerciseScore}
+			/>			 */}
 			<TrackingRow
 				name="Exercise"
-				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={exerciseScore}
 			/>			
 			<TrackingRow
 				name="Mobilize"
-				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={mobilizeScore}
 			/>			
 			<TrackingRow
 				name="Sleep"
-				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', initChecked: sleepCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', initChecked: sleepCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={sleepScore}
 			/>			
 			<TrackingRow
 				name="Hydrate"
-				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', initChecked: hydrateCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', initChecked: hydrateCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={hydrateScore}
 			/>
 			<TrackingRow
 				name="Well-Being"
-				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', initChecked: wellbeingCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', initChecked: wellbeingCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'well-being-text', initTextArea: initWellbeingNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={wellBeingScore}
 			/>
 			<TrackingRow
 				name="Reflect"
-				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', initChecked: reflectCheck, onCheckboxChange: checkboxChangeHandler} }
+				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', initChecked: reflectCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'reflect-text', initTextArea: initReflectNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={reflectScore}
