@@ -1,31 +1,39 @@
-// import { useState } from 'react';
-import Input from '../UI/Input';
-import HabitRow from '../UI/HabitRowWrapper';
+import { useState } from 'react';
+import AccomplishInput from "./AccomplishInput";
+import NotesInput from './NotesInput';
+import RowScore from './RowScore';
 
-const ExerciseRow = () => {
-	// const [exerciseChecked, setExerciseChecked] = useState(false);
-	// const [enteredExerciseNotes, setEnteredExerciseNotes] = useState('');
-
-	// const exerciseNotesHandler = () => {
-
-	// }
+const ExerciseRow = (props) => {
+	const [exercisePoints, setExercisePoints] = useState(0);
+	const [exerciseNotes, setExerciseNotes] = useState('');
 	
+	const pointsUpdateHandler = (points) => {
+		setExercisePoints(exercisePoints + points);
+		// props.onScoreUpdate()
+	}
+	const notesUpdateHandler = (notes) => {
+		setExerciseNotes(notes);
+	}
+
+	if (props.isFormSubmitted) {
+		props.onSubmitResults('exercise', exercisePoints, 'exercise_notes', exerciseNotes);
+	}
+
 	return (
-		<HabitRow name="Exercise">
-			<Input
-				type="checkbox"
-				label="Accomplished"
-				id="exercise-check"
-				// onChange={exerciseCheckHandler}
-				 />
-			<Input
-				type="textarea"
-				label="Notes"
-				id="exercise-text"
-				// value={enteredExerciseNotes}
-				// onChange={exerciseNotesHandler} 
-				/>			
-		</HabitRow>
+		<div>
+			<h2>Exercise</h2>
+			<AccomplishInput
+				label='Accomplished'
+				id='exercise-check'
+				onPointsUpdate={pointsUpdateHandler}
+			/>
+			<NotesInput 
+				label='Notes'
+				id='exercise-notes'
+				onNotesUpdate={notesUpdateHandler}
+			/>
+			<RowScore points={exercisePoints} />
+		</div>
 	);
 }
 

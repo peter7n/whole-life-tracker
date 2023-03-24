@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react';
 // import NutritionRow from './NutritionRow';
-// import ExerciseRow from './ExerciseRow';
+import ExerciseRow from './ExerciseRow';
 // import MobilizeRow from './MobilizeRow';
 // import SleepRow from './SleepRow';
 // import HydrateRow from './HydrateRow';
@@ -28,6 +28,8 @@ const HabitsPanel = (props) => {
 	const [wellBeingNotes, setWebllBeingNotes] = useState('');
 	const [reflectScore, setReflectScore] = useState(0);
 	const [reflectNotes, setReflectNotes] = useState('');
+
+	const [submitState, setSubmitState] = useState(false);
 
 	// checkbox control to set state on data load
 	const [exerciseCheck, setExerciseCheck] = useState(false);
@@ -75,24 +77,71 @@ const HabitsPanel = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		const totalScore = nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore;
-		const dayData = {
-			date: props.date,
-			nutrition: nutritionScore,
-			nutrition_noncompliant: nutritionFoodArray,
-			exercise: exerciseScore,
-			exercise_notes: exerciseNotes,
-			mobilize: mobilizeScore,
-			sleep: sleepScore,
-			hydrate: hydrateScore,
-			wellbeing: wellBeingScore,
-			wellbeing_notes: wellBeingNotes,
-			reflect: reflectScore,
-			reflect_notes: reflectNotes,
-			total: totalScore
-		}
-		props.onSubmitDay(dayData); //pass day data to App.js
-	}
+		setSubmitState(true);
+		
+		// const totalScore = nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore;
+		// const dayData = {
+		// 	date: props.date,
+		// 	nutrition: nutritionScore,
+		// 	nutrition_noncompliant: nutritionFoodArray,
+		// 	exercise: exerciseScore,
+		// 	exercise_notes: exerciseNotes,
+		// 	mobilize: mobilizeScore,
+		// 	sleep: sleepScore,
+		// 	hydrate: hydrateScore,
+		// 	wellbeing: wellBeingScore,
+		// 	wellbeing_notes: wellBeingNotes,
+		// 	reflect: reflectScore,
+		// 	reflect_notes: reflectNotes,
+		// 	total: totalScore
+		// }
+		// props.onSubmitDay(dayData); //pass day data to App.js
+	};
+
+	// const initDayData = {
+	// 	date: props.date,
+	// 	nutrition: 0,
+	// 	nutrition_noncompliant: {},
+	// 	exercise: 0,
+	// 	exercise_notes: '',
+	// 	mobilize: 0,
+	// 	sleep: 0,
+	// 	hydrate: 0,
+	// 	wellbeing: 0,
+	// 	wellbeing_notes: '',
+	// 	reflect: 0,
+	// 	reflect_notes: '',
+	// 	total: 0
+	// }
+
+	const [dayData, setDayData] = useState({
+		date: props.date,
+		nutrition: 0,
+		nutrition_noncompliant: {},
+		exercise: 0,
+		exercise_notes: '',
+		mobilize: 0,
+		sleep: 0,
+		hydrate: 0,
+		wellbeing: 0,
+		wellbeing_notes: '',
+		reflect: 0,
+		reflect_notes: '',
+		total: 0
+	});
+	
+	const submitResultsHandler = (key1, points, key2, data) => {
+		// setDayData((prevData) => {
+			// const newData = {...prevData};
+			// newData.exercise = points;
+			// newData.exercise_notes = data;
+		// 	return {...prevData};
+		// });
+		// setDayData({new: 'new'});
+		console.log('result: ' + points);
+		console.log('result: ' + data);
+		console.log(dayData);
+	};
 
 	const nutritionAddHandler = (pointsSelected, enteredFood) => {
 		let foodEntry = {
@@ -198,6 +247,9 @@ const HabitsPanel = (props) => {
 					</div>
 				</div>
 			</div>
+
+			<ExerciseRow onScoreUpdate={scoreUpdateHandler} isFormSubmitted={submitState} onSubmitResults={submitResultsHandler} />
+
 			{/* <TrackingRow
 				name="Exercise"
 				radio={ {show: true, name: 'exercise-radio', label1: 'Yes', label2: 'No', id1: 'yes', id2: 'no', initRadio1: radio1Check, initRadio2: radio2Check} }
@@ -205,13 +257,13 @@ const HabitsPanel = (props) => {
 				onScoreUpdate={scoreUpdateHandler} 
 				np={exerciseScore}
 			/>			 */}
-			<TrackingRow
+			{/* <TrackingRow
 				name="Exercise"
 				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={exerciseScore}
-			/>			
+			/>			 */}
 			<TrackingRow
 				name="Mobilize"
 				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck} }
