@@ -6,7 +6,7 @@ const NotesInput = (props) => {
 
 	const textAreaInputHandler = (event) => {
 		setEnteredTextArea(event.target.value);
-		props.onNotesUpdate(enteredTextArea);
+		props.onNotesUpdate(event.target.value);
 	}
 
 	return (

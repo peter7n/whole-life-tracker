@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import DateBar from './DateBar/DateBar';
-import HabitsPanel from './HabitsPanel/HabitsPanel';
+import HabitsPanelRefactor from './HabitsPanel/HabitsPanelRefactor';
+// import HabitsPanel from './HabitsPanel/HabitsPanel';
 // import ScoreDisplay from './ScoreDisplay/ScoreDisplay';
 import HabitsHistory from './HabitsHistory/HabitsHistory';
 
@@ -24,8 +25,6 @@ function App() {
     console.log(daySubmitData);
     setDaySubmitted(true);
     setDaysDataObject(daySubmitData);
-    // daysDataObject.unshift(daySubmitData);
-    // setDaysDataObject(daysDataObject);
   }
   
   // useEffect(() => {
@@ -84,7 +83,7 @@ function App() {
   } else if (daySubmitted) {
     viewContent = <p>Congrats! You submitted</p>;
   } else {
-    viewContent = <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />;
+    viewContent = <HabitsPanelRefactor onSubmitDay={submitDayHandler} date={currentDateId} />;
   }
 
   return (

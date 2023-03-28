@@ -1,13 +1,14 @@
 import { useState, useEffect} from 'react';
 // import NutritionRow from './NutritionRow';
 import ExerciseRow from './ExerciseRow';
-// import MobilizeRow from './MobilizeRow';
+import MobilizeRow from './MobilizeRow';
 // import SleepRow from './SleepRow';
 // import HydrateRow from './HydrateRow';
 // import WellBeingRow from './WellBeingRow';
 // import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import TrackingRow from './TrackingRow';
+import WellBeingRow from './WellBeingRow';
 
 const HabitsPanel = (props) => {
 	let fetchUrl = 'https://masterptn.org:3000';
@@ -78,43 +79,9 @@ const HabitsPanel = (props) => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 		setSubmitState(true);
-		
-		// const totalScore = nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore;
-		// const dayData = {
-		// 	date: props.date,
-		// 	nutrition: nutritionScore,
-		// 	nutrition_noncompliant: nutritionFoodArray,
-		// 	exercise: exerciseScore,
-		// 	exercise_notes: exerciseNotes,
-		// 	mobilize: mobilizeScore,
-		// 	sleep: sleepScore,
-		// 	hydrate: hydrateScore,
-		// 	wellbeing: wellBeingScore,
-		// 	wellbeing_notes: wellBeingNotes,
-		// 	reflect: reflectScore,
-		// 	reflect_notes: reflectNotes,
-		// 	total: totalScore
-		// }
-		// props.onSubmitDay(dayData); //pass day data to App.js
 	};
 
-	// const initDayData = {
-	// 	date: props.date,
-	// 	nutrition: 0,
-	// 	nutrition_noncompliant: {},
-	// 	exercise: 0,
-	// 	exercise_notes: '',
-	// 	mobilize: 0,
-	// 	sleep: 0,
-	// 	hydrate: 0,
-	// 	wellbeing: 0,
-	// 	wellbeing_notes: '',
-	// 	reflect: 0,
-	// 	reflect_notes: '',
-	// 	total: 0
-	// }
-
-	const [dayData, setDayData] = useState({
+	let dayData = {
 		date: props.date,
 		nutrition: 0,
 		nutrition_noncompliant: {},
@@ -128,19 +95,50 @@ const HabitsPanel = (props) => {
 		reflect: 0,
 		reflect_notes: '',
 		total: 0
-	});
+	}
+
+	// const [dayData, setDayData] = useState({
+	// 	date: props.date,
+	// 	nutrition: 0,
+	// 	nutrition_noncompliant: {},
+	// 	exercise: 0,
+	// 	exercise_notes: '',
+	// 	mobilize: 0,
+	// 	sleep: 0,
+	// 	hydrate: 0,
+	// 	wellbeing: 0,
+	// 	wellbeing_notes: '',
+	// 	reflect: 0,
+	// 	reflect_notes: '',
+	// 	total: 0
+	// });
+	// const [dayData, setDayData] = useState(-7);
 	
 	const submitResultsHandler = (key1, points, key2, data) => {
 		// setDayData((prevData) => {
-			// const newData = {...prevData};
-			// newData.exercise = points;
-			// newData.exercise_notes = data;
-		// 	return {...prevData};
+		// 	let newData = {...prevData};
+		// 	if (key1 === 'exercise') {
+		// 		newData.exercise = points;
+		// 		newData.exercise_notes = data;
+		// 	} else if (key1 === 'mobilize') {
+		// 		newData.mobilize = points;
+		// 	}
+			
+		// 	return {...newData};
 		// });
-		// setDayData({new: 'new'});
-		console.log('result: ' + points);
-		console.log('result: ' + data);
+		// let xyz = dayData;
+		dayData[key1] = points;
+		if (key2) {
+			dayData[key2] = data;
+		}
+		// setDayData((prev) => {
+		// 	return {...xyz};
+		// });
+		console.log('points: ' + points);
+		console.log('data: ' + data);
 		console.log(dayData);
+		setSubmitState(false);	// stop infinite loop
+		props.onSubmitDay(dayData); // pass day data to App.js
 	};
 
 	const nutritionAddHandler = (pointsSelected, enteredFood) => {
@@ -177,10 +175,10 @@ const HabitsPanel = (props) => {
 					setNutritionFoodArray(data.nutrition_noncompliant);
 					setIsFoodEntered(true);
 					if (data.exercise) {
-						setExerciseScore(data.exercise);
+						// setExerciseScore(data.exercise);
 						setExerciseCheck(true);
 						// setRadio1Check(true);
-						setExerciseNotes(data.exercise_notes);
+						// setExerciseNotes(data.exercise_notes);
 						setInitExerciseNotes(data.exercise_notes);
 					}
 					if (data.mobilize) {
@@ -196,9 +194,9 @@ const HabitsPanel = (props) => {
 						setHydrateCheck(true);
 					}
 					if (data.wellbeing) {
-						setWellBeingScore(data.wellbeing);
+						// setWellBeingScore(data.wellbeing);
 						setWellBeingCheck(true);
-						setWebllBeingNotes(data.wellbeing_notes);
+						// setWebllBeingNotes(data.wellbeing_notes);
 						setInitWellbeingNotes(data.wellbeing_notes);
 					}
 					if (data.reflect) {
@@ -217,17 +215,9 @@ const HabitsPanel = (props) => {
 		}
 	}, [props.date, fetchUrl]);
 
-	console.log('food array:' + nutritionFoodArray.length);
-	console.log(nutritionFoodArray);
-	if (nutritionFoodArray.length) {
-		console.log('true');
-	} else {
-		console.log('false');
-	}
-
 	return (
 		<form onSubmit={submitHandler}>
-			<TrackingRow 
+			{/* <TrackingRow 
 				name="Nutrition"
 				select={ {show: true, label: 'Pts', id: 'nutrition-select', value: '-1'} }
 				text={ {show: true, label: 'Food', id: 'nutrition-text'} }
@@ -246,9 +236,25 @@ const HabitsPanel = (props) => {
 						</ul>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
-			<ExerciseRow onScoreUpdate={scoreUpdateHandler} isFormSubmitted={submitState} onSubmitResults={submitResultsHandler} />
+			<ExerciseRow 
+				isFormSubmitted={submitState} 
+				onSubmitResults={submitResultsHandler}
+				initChecked={exerciseCheck}
+				initTextArea={initExerciseNotes}
+			/>
+			<MobilizeRow 
+				isFormSubmitted={submitState} 
+				onSubmitResults={submitResultsHandler}
+				initChecked={mobilizeCheck}
+			/>
+			<WellBeingRow 
+				isFormSubmitted={submitState} 
+				onSubmitResults={submitResultsHandler} 
+				initChecked={wellbeingCheck}
+				initTextArea={initWellbeingNotes} 
+			/>
 
 			{/* <TrackingRow
 				name="Exercise"
@@ -264,38 +270,38 @@ const HabitsPanel = (props) => {
 				onScoreUpdate={scoreUpdateHandler} 
 				np={exerciseScore}
 			/>			 */}
-			<TrackingRow
+			{/* <TrackingRow
 				name="Mobilize"
 				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={mobilizeScore}
-			/>			
-			<TrackingRow
+			/>			 */}
+			{/* <TrackingRow
 				name="Sleep"
 				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', initChecked: sleepCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={sleepScore}
-			/>			
-			<TrackingRow
+			/>			 */}
+			{/* <TrackingRow
 				name="Hydrate"
 				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', initChecked: hydrateCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={hydrateScore}
-			/>
-			<TrackingRow
+			/> */}
+			{/* <TrackingRow
 				name="Well-Being"
 				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', initChecked: wellbeingCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'well-being-text', initTextArea: initWellbeingNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={wellBeingScore}
-			/>
-			<TrackingRow
+			/> */}
+			{/* <TrackingRow
 				name="Reflect"
 				checkbox={ {show: true, label: 'Accomplished', id: 'reflect-check', initChecked: reflectCheck} }
 				textarea={ {show: true, label: 'Notes', id: 'reflect-text', initTextArea: initReflectNotes} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={reflectScore}
-			/>
+			/> */}
 			<button type="submit" className='btn btn-primary'>Submit</button>
 			<ScoreDisplay score={nutritionScore + exerciseScore + mobilizeScore + sleepScore + hydrateScore + wellBeingScore + reflectScore} />
 		</form>
