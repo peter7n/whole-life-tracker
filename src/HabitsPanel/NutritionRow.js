@@ -1,54 +1,93 @@
-import { useState } from 'react';
-import HabitRow from '../UI/HabitRowWrapper';
+import { useState, useEffect, Fragment } from 'react';
+import Select from '../UI/Select';
 import Input from '../UI/Input';
+import RowScore from './RowScore';
+import Button from '../UI/Button';
+import NutritionBadFoods from './NutritionBadFoods';
 
 const NutritionRow = (props) => {
-	const [pointsSelected, setPointsSelected] = useState('-1');
-	const [enteredFood, setEnteredFood] = useState('');
-	const [foodArray, setFoodArray] = useState([]);
-	const [nutritionPoints, setNutritionPoints] = useState(5);
+	// === States ===
+	const [points, setPoints] = useState(props.initPoints);
+	const [badFoodPoint, setBadFoodPoint] = useState(-1);
+	const [badFood, setBadFood] = useState('');
+	const [foodArray, setFoodArray] = useState(props.initFoodArray);
+	const [clearText, setClearText] = useState(false);
 
-	const pointsSelectHandler = (event) => {
-		setPointsSelected(event.target.value);
-	}
-
-	const foodEnteredHandler = (event) => {
-		setEnteredFood(event.target.value);
-	}
-	
-	const clickHandler = (event) => {
-		event.preventDefault(); // prevent form submission
+	// === Handlers ===
+	const nutritionAddHandler = (event) => {
+		event.preventDefault();
 		let foodEntry = {
-			points: pointsSelected,
-			food: enteredFood
+			points: badFoodPoint,
+			food: badFood
 		};
-		let updatedArray = [foodEntry, ...foodArray];
-		let updatedPoints = nutritionPoints + +pointsSelected;
-
-		setFoodArray((prevFoodArray) => {
-			return [foodEntry, ...prevFoodArray];
+		setFoodArray((prevArr) => {
+			return [...prevArr, foodEntry];
 		});
-		setNutritionPoints(updatedPoints);
-		props.onScoreUpdate('NUTRITION', updatedPoints, updatedArray);
+		setPoints(points + +badFoodPoint);
+		setClearText(true);	// clear the text input field
+
+		console.log(foodArray);
 	};
+
+	const badFoodPointHandler = (num) => {
+		setBadFoodPoint(num);
+	}
+
+	const badFoodHandler = (text) => {
+		setBadFood(text);
+	}
+
+	const resetClearTextHandler = (bool) => {
+		setClearText(bool);
+	}
+
+	// === Effects ===
+	useEffect(() => {
+		if (props.isFormSubmitted) {
+			props.onSubmitResults('nutrition', points, 'nutrition_noncompliant', foodArray);
+		}
+	}, [props.isFormSubmitted, points, foodArray, props]);
+	
+	// Set initial points and food array fetched from backend
+	useEffect(() => {
+		setPoints(props.initPoints);
+		setFoodArray(props.initFoodArray);
+	}, [props.initPoints, props.initFoodArray]);
 	
 	return (
-		<HabitRow name="Nutrition">
-			<Input
-				type="select"
-				id="nutrition-select"
-				label="Pts"
-				value={pointsSelected}
-				onChange={pointsSelectHandler} />
-			<Input
-				type="text"
-				id="nutrition-text"
-				label="Food"
-				value={enteredFood}
-				onChange={foodEnteredHandler} />
-			<button onClick={clickHandler}>Add</button>
-			<p>{nutritionPoints}</p>
-		</HabitRow>
+		<Fragment>
+			<h2>Nutrition</h2>
+			<div className='col'>
+				<Select
+					id='nutrition-select'
+					name='nutritition-select'
+					label='Pts'
+					initValue='-1'
+					valueOptions={[-1, -2, -3, -4, -5]}
+					onSelectUpdate={badFoodPointHandler}
+				/>
+			</div>
+			<div className='col'>
+				<Input
+					type='text'
+					id='nutrition-text'
+					label='Food'
+					onTextUpdate={badFoodHandler}
+					clearText={clearText} 
+					onClearText={resetClearTextHandler}
+				/>
+			</div>
+			<div className='col-xsm-12'>
+				<Button
+					label='Add'
+					onClick={nutritionAddHandler}
+				/>
+			</div>
+			<NutritionBadFoods 
+				foodArray={foodArray}
+			/>
+			<RowScore points={points} />
+		</Fragment>
 	);
 }
 

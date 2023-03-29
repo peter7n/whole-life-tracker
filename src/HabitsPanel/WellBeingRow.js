@@ -1,10 +1,12 @@
-// Props: isFormSubmitted, onSubmitResults
+/* == Props ==
+ * initChecked: Initial checked state fetched from backend
+ * onCheckboxUpdate: Function in parent to execute when checkbox updates
+ * type, id, name, label: Values for the input field
+ */
 
 import { useState, useEffect } from 'react';
-// import AccomplishInput from "./AccomplishInput";
 import Input from '../UI/Input';
 import TextArea from '../UI/TextArea';
-// import NotesInput from './NotesInput';
 import RowScore from './RowScore';
 
 const WellBeingRow = (props) => {

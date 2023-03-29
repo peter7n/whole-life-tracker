@@ -1,14 +1,13 @@
 import { useState, useEffect} from 'react';
-// import NutritionRow from './NutritionRow';
+import NutritionRow from './NutritionRow';
 import ExerciseRow from './ExerciseRow';
 import MobilizeRow from './MobilizeRow';
 // import SleepRow from './SleepRow';
 // import HydrateRow from './HydrateRow';
-// import WellBeingRow from './WellBeingRow';
+import WellBeingRow from './WellBeingRow';
 // import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
-import TrackingRow from './TrackingRow';
-import WellBeingRow from './WellBeingRow';
+// import TrackingRow from './TrackingRow';
 
 const HabitsPanel = (props) => {
 	let fetchUrl = 'https://masterptn.org:3000';
@@ -45,13 +44,8 @@ const HabitsPanel = (props) => {
 	const [initExerciseNotes, setInitExerciseNotes] = useState('');
 	const [initWellbeingNotes, setInitWellbeingNotes] = useState('');
 	const [initReflectNotes, setInitReflectNotes] = useState('');
-
-	// const [existingDayData, setExistingDayData] = useState({});
-	
-	// Specific states for Nutrition tracker
-	// const [tempFoodArray, setTempFoodArray] = useState([]);
-	// const [nutritionPoints, setNutritionPoints] = useState(5);
-	const [isFoodEntered, setIsFoodEntered] = useState(false);
+	const [initNutritionPoints, setInitNutritionPoints] = useState(5);
+	const [initFoodArray, setInitFoodArray] = useState([]);
 
 	const scoreUpdateHandler = (habit, points, data) => {
 		if (habit === 'Nutrition') {
@@ -146,19 +140,13 @@ const HabitsPanel = (props) => {
 			points: pointsSelected,
 			food: enteredFood
 		};
-		// let updatedArray = [...tempFoodArray, foodEntry];
-		// let updatedPoints = nutritionPoints + +pointsSelected;
 
-		// setTempFoodArray((prevFoodArray) => {
-		// 	return [...prevFoodArray, foodEntry];
-		// });
-		// setNutritionPoints(updatedPoints);
 		setNutritionFoodArray((prevArr) => {
 			return [...prevArr, foodEntry];
 		});
 		scoreUpdateHandler('Nutrition', +pointsSelected);
 
-		setIsFoodEntered(true);
+		// setIsFoodEntered(true);
 	};
 
 	// fetch data for today's date
@@ -170,10 +158,10 @@ const HabitsPanel = (props) => {
 				if (data.date) {
 					console.log('entry exists');
 					// setExistingDayData(data);
-					setNutritionScore(data.nutrition);
+					setInitNutritionPoints(data.nutrition);
 					// setTempFoodArray(data.nutrition_noncompliant);
-					setNutritionFoodArray(data.nutrition_noncompliant);
-					setIsFoodEntered(true);
+					setInitFoodArray(data.nutrition_noncompliant);
+					// setIsFoodEntered(true);
 					if (data.exercise) {
 						// setExerciseScore(data.exercise);
 						setExerciseCheck(true);
@@ -216,7 +204,7 @@ const HabitsPanel = (props) => {
 	}, [props.date, fetchUrl]);
 
 	return (
-		<form onSubmit={submitHandler}>
+		<form onSubmit={submitHandler} className='row mt-3'>
 			{/* <TrackingRow 
 				name="Nutrition"
 				select={ {show: true, label: 'Pts', id: 'nutrition-select', value: '-1'} }
@@ -238,6 +226,12 @@ const HabitsPanel = (props) => {
 				</div>
 			</div> */}
 
+			<NutritionRow 
+				isFormSubmitted={submitState} 
+				onSubmitResults={submitResultsHandler}
+				initPoints={initNutritionPoints}
+				initFoodArray={initFoodArray}
+			/>
 			<ExerciseRow 
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
@@ -256,26 +250,7 @@ const HabitsPanel = (props) => {
 				initTextArea={initWellbeingNotes} 
 			/>
 
-			{/* <TrackingRow
-				name="Exercise"
-				radio={ {show: true, name: 'exercise-radio', label1: 'Yes', label2: 'No', id1: 'yes', id2: 'no', initRadio1: radio1Check, initRadio2: radio2Check} }
-				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
-				onScoreUpdate={scoreUpdateHandler} 
-				np={exerciseScore}
-			/>			 */}
-			{/* <TrackingRow
-				name="Exercise"
-				checkbox={ {show: true, label: 'Accomplished', id: 'exercise-check', initChecked: exerciseCheck} }
-				textarea={ {show: true, label: 'Notes', id: 'exercise-text', initTextArea: initExerciseNotes} }
-				onScoreUpdate={scoreUpdateHandler} 
-				np={exerciseScore}
-			/>			 */}
-			{/* <TrackingRow
-				name="Mobilize"
-				checkbox={ {show: true, label: 'Accomplished', id: 'mobilize-check', initChecked: mobilizeCheck} }
-				onScoreUpdate={scoreUpdateHandler} 
-				np={mobilizeScore}
-			/>			 */}
+
 			{/* <TrackingRow
 				name="Sleep"
 				checkbox={ {show: true, label: 'Accomplished', id: 'sleep-check', initChecked: sleepCheck} }
@@ -287,13 +262,6 @@ const HabitsPanel = (props) => {
 				checkbox={ {show: true, label: 'Accomplished', id: 'hydrate-check', initChecked: hydrateCheck} }
 				onScoreUpdate={scoreUpdateHandler} 
 				np={hydrateScore}
-			/> */}
-			{/* <TrackingRow
-				name="Well-Being"
-				checkbox={ {show: true, label: 'Accomplished', id: 'well-being-check', initChecked: wellbeingCheck} }
-				textarea={ {show: true, label: 'Notes', id: 'well-being-text', initTextArea: initWellbeingNotes} }
-				onScoreUpdate={scoreUpdateHandler} 
-				np={wellBeingScore}
 			/> */}
 			{/* <TrackingRow
 				name="Reflect"

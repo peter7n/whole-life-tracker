@@ -1,19 +1,35 @@
+/* == Props ==
+ * initValue: Sets the initial value for the select field
+ * onSelectUpdate: Function in parent to execute when select updates
+ * id, name, label: Values for the select field
+ * valueOptions: An array of the available select options
+ */
+
+import { useState, Fragment } from "react";
+
 const Select = (props) => {
+	const [selectSelected, setSelectSelected] = useState(props.initValue); 	// set initial select value
+
+	const selectInputHandler = (event) => {
+		setSelectSelected(event.target.value);
+		props.onSelectUpdate(event.target.value);
+	}
+
 	return (
-		<div>
+		<Fragment>
 			<label htmlFor={props.id}>{props.label}</label>
 			<select 
 				className='form-select' 
-				name={props.id} 
+				name={props.name} 
 				id={props.id} 
-				value={props.value} 
-				onChange={props.onChange}
+				value={selectSelected}
+				onChange={selectInputHandler}
 			>
 				{props.valueOptions.map((val, i) =>
-					<option key={i}>{val}</option>
+					<option key={i} value={val}>{val}</option>
 				)}
 			</select>
-		</div>
+		</Fragment>
 	);
 }
 

@@ -1,16 +1,20 @@
-/* == Props ==
+/* === Props ===
  * initChecked: Initial checked state fetched from backend
+ * clearText: Clears the text field
+ * onClearText: Passes back false to set clearText back to false again
  * onCheckboxUpdate: Function in parent to execute when checkbox updates
+ * onTextUpdate: Function in parent to execute when text field updates
  * type, id, name, label: Values for the input field
  */
 
 import { Fragment, useState, useEffect } from 'react';
 
 const Input = (props) => {
-	// == States ==
+	// === States ===
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
+	const [enteredText, setEnteredText] = useState('');
 
-	// == Handlers ==
+	// === Handlers ===
 	const checkboxHandler = () => {
 		if (!checkboxChecked) {
 			setCheckboxChecked(true);
@@ -21,14 +25,17 @@ const Input = (props) => {
 		}
 	}
 
-	// const textInputHandler = (event) => {
-	// 	setEnteredText(event.target.value);
-	// 	props.onScoreUpdate(props.name, 0, event.target.value);
-	// }
+	const textInputHandler = (event) => {
+		setEnteredText(event.target.value);
+		props.onTextUpdate(event.target.value);
+	}
+
 	// let existingCheck = props.initChecked;
 	// let label = props.label;
 	// const checkFunc = props.onCheckboxUpdate;
-	// Set initial checkbox state and score to existing fetch data
+
+	// === Effects ===
+	// Set initial checkbox state and score to existing fetched data
 	useEffect(() => {
 		if (props.initChecked !== undefined) {
 			setCheckboxChecked(props.initChecked);
@@ -39,24 +46,32 @@ const Input = (props) => {
 			console.log(props.initChecked);
 		}
 	}, [props.initChecked]);
+
+	// Clear the text input field
+	useEffect(() => {
+		if (props.clearText) {
+			setEnteredText('');
+			props.onClearText(false);
+		}
+	}, [props.clearText]);
 	
 	// Return radio input
-	if (props.type === 'radio') {
-		return (
-			<Fragment>
-				<input 
-					type="radio" 
-					className="btn-check" 
-					name={props.name} 
-					id={props.id}
-					autoComplete="off"
-					onChange={props.onChange}
-					checked={props.checked}
-				></input>
-				<label className={`btn ${props.className}`} htmlFor={props.id}>{props.label}</label>				
-			</Fragment>
-		);
-	}
+	// if (props.type === 'radio') {
+	// 	return (
+	// 		<Fragment>
+	// 			<input 
+	// 				type="radio" 
+	// 				className="btn-check" 
+	// 				name={props.name} 
+	// 				id={props.id}
+	// 				autoComplete="off"
+	// 				onChange={props.onChange}
+	// 				checked={props.checked}
+	// 			></input>
+	// 			<label className={`btn ${props.className}`} htmlFor={props.id}>{props.label}</label>				
+	// 		</Fragment>
+	// 	);
+	// }
 	
 	// Return checkbox or text input
 	return (
@@ -67,8 +82,8 @@ const Input = (props) => {
 				type={props.type} 
 				id={props.id} 
 				name={props.name} 
-				value={props.value} 
-				onChange={checkboxHandler}
+				value={enteredText} 
+				onChange={props.type === 'checkbox' ? checkboxHandler : textInputHandler}
 				checked={checkboxChecked}
 			/>
 		</div>
