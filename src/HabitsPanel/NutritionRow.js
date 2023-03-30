@@ -1,3 +1,10 @@
+/* === Props ===
+ * initFoodAray: Initial array of noncompliant foods fetched from backend
+ * initPoints: Initial points fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
+
 import { useState, useEffect, Fragment } from 'react';
 import Select from '../UI/Select';
 import Input from '../UI/Input';
@@ -7,10 +14,10 @@ import NutritionBadFoods from './NutritionBadFoods';
 
 const NutritionRow = (props) => {
 	// === States ===
-	const [points, setPoints] = useState(props.initPoints);
+	const [points, setPoints] = useState(5);
 	const [badFoodPoint, setBadFoodPoint] = useState(-1);
 	const [badFood, setBadFood] = useState('');
-	const [foodArray, setFoodArray] = useState(props.initFoodArray);
+	const [foodArray, setFoodArray] = useState([]);
 	const [clearText, setClearText] = useState(false);
 
 	// === Handlers ===
@@ -24,6 +31,7 @@ const NutritionRow = (props) => {
 			return [...prevArr, foodEntry];
 		});
 		setPoints(points + +badFoodPoint);
+		props.onScoreUpdate(+badFoodPoint);
 		setClearText(true);	// clear the text input field
 
 		console.log(foodArray);
@@ -52,6 +60,13 @@ const NutritionRow = (props) => {
 	useEffect(() => {
 		setPoints(props.initPoints);
 		setFoodArray(props.initFoodArray);
+		console.log('food init points: ' + props.initPoints);
+		// If existing points were fetched, subtract 5 from score so initial points aren't counted
+		if (props.arePointsFetched) {
+			props.onScoreUpdate(props.initPoints - 5);
+		} else {
+			props.onScoreUpdate(props.initPoints);
+		}
 	}, [props.initPoints, props.initFoodArray]);
 	
 	return (

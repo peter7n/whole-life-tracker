@@ -1,3 +1,9 @@
+/* === Props ===
+ * initChecked: Initial checked state fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
+
 import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
@@ -7,11 +13,11 @@ const MobilizeRow = (props) => {
 
 	const pointsUpdateHandler = (num) => {
 		setPoints(points + num);
+		props.onScoreUpdate(num);
 	}
 
 	useEffect(() => {
 		if (props.isFormSubmitted) {
-			console.log('MOBILIZE inside useEffect');
 			props.onSubmitResults('mobilize', points);
 		}
 	}, [props.isFormSubmitted, points, props]);

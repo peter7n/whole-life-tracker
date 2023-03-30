@@ -1,26 +1,39 @@
-import { useState } from 'react';
-import HabitRow from '../UI/HabitRowWrapper';
+/* === Props ===
+ * initChecked: Initial checked state fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
+
+import { useState, useEffect } from 'react';
+import Input from '../UI/Input';
+import RowScore from './RowScore';
 
 const SleepRow = (props) => {
-	const [sleepChecked, setSleepCheckState] = useState(false);
-	const sleepCheckHandler = () => {
-		if (!sleepChecked) {
-			setSleepCheckState(true);
-			props.onScoreUpdate('SLEEP', 5);
-		} else {
-			setSleepCheckState(false);
-			props.onScoreUpdate('SLEEP', -5);
-		}
+	const [points, setPoints] = useState(0);
+
+	const pointsUpdateHandler = (num) => {
+		setPoints(points + num);
+		props.onScoreUpdate(num);
 	}
+
+	useEffect(() => {
+		if (props.isFormSubmitted) {
+			props.onSubmitResults('sleep', points);
+		}
+	}, [props.isFormSubmitted, points, props]);
+
 	return (
 		<div>
-			<HabitRow
-				name="Sleep"
-				inputType="checkbox"
-				checkboxId="sleep"
-				onChange={sleepCheckHandler}
+			<h2>Sleep</h2>
+			<Input
+				type='checkbox'
+				label='Accomplished'
+				id='sleep-check'
+				name='sleep-check'
+				onCheckboxUpdate={pointsUpdateHandler}
+				initChecked={props.initChecked}
 			/>
-			{sleepChecked && <p>+5</p>}
+			<RowScore points={points} />
 		</div>
 	);
 }

@@ -1,7 +1,8 @@
-/* == Props ==
+/* === Props ===
  * initChecked: Initial checked state fetched from backend
- * onCheckboxUpdate: Function in parent to execute when checkbox updates
- * type, id, name, label: Values for the input field
+ * initTextArea: Initial text value fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
  */
 
 import { useState, useEffect } from 'react';
@@ -15,6 +16,7 @@ const WellBeingRow = (props) => {
 	
 	const pointsUpdateHandler = (num) => {
 		setPoints(points + num);
+		props.onScoreUpdate(num);
 	}
 	const notesUpdateHandler = (text) => {
 		setNotes(text);

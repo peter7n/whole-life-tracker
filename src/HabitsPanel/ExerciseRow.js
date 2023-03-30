@@ -1,4 +1,9 @@
-// Props: isFormSubmitted, onSubmitResults
+/* === Props ===
+ * initChecked: Initial checked state fetched from backend
+ * initTextArea: Initial text value fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
 
 import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
@@ -11,6 +16,7 @@ const ExerciseRow = (props) => {
 	
 	const pointsUpdateHandler = (num) => {
 		setPoints(points + num);
+		props.onScoreUpdate(num);
 	}
 	const notesUpdateHandler = (text) => {
 		setNotes(text);

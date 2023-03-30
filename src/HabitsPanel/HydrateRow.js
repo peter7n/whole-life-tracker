@@ -1,31 +1,40 @@
-import { useState } from 'react';
-import HabitRow from '../UI/HabitRowWrapper';
+/* === Props ===
+ * initChecked: Initial checked state fetched from backend
+ * onScoreUpdate: Pass updated habit points to track total score
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
+
+import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
+import RowScore from './RowScore';
 
 const HydrateRow = (props) => {
-	const [hydrateChecked, setHydrateState] = useState(false);
+	const [points, setPoints] = useState(0);
 
-	const hydrateCheckHandler = (event) => {
-		if (!hydrateChecked) {
-			setHydrateState(true);
-			props.onScoreUpdate('HYDRATE', 5);
-		} else {
-			setHydrateState(false);
-			props.onScoreUpdate('HYDRATE', -5);
-		}
+	const pointsUpdateHandler = (num) => {
+		setPoints(points + num);
+		props.onScoreUpdate(num);
 	}
-	
+
+	useEffect(() => {
+		if (props.isFormSubmitted) {
+			props.onSubmitResults('hydrate', points);
+		}
+	}, [props.isFormSubmitted, points, props]);
+
 	return (
 		<div>
-			<HabitRow name="Hydrate">
-				<Input 
-					type="checkbox"
-					id="hydrate-check"
-					label="Accomplished"
-					onChange={hydrateCheckHandler}
-				 />
-				{hydrateChecked && <p>+5</p>}
-			</HabitRow>
+			<h2>Hydrate</h2>
+			<Input
+				type='checkbox'
+				label='Accomplished'
+				id='hydrate-check'
+				name='hydrate-check'
+				onCheckboxUpdate={pointsUpdateHandler}
+				initChecked={props.initChecked}
+			/>
+			<RowScore points={points} />
 		</div>
 	);
 }

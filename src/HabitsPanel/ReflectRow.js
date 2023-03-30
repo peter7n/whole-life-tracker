@@ -1,41 +1,52 @@
-import { useState } from 'react';
-import HabitRow from '../UI/HabitRowWrapper';
+/* === Props ===
+ * initChecked: Initial checked state fetched from backend
+ * initTextArea: Initial text value fetched from backend
+ * isFormSubmitted: True when the entire form is submitted
+ * onSubmitResults: Submits results to the parent component
+ */
+
+import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
+import TextArea from '../UI/TextArea';
+import RowScore from './RowScore';
 
 const ReflectRow = (props) => {
-	const [reflectChecked, setReflectChecked] = useState(false);
-	const [enteredReflectNotes, setEnteredReflectNotes] = useState('');
+	const [points, setPoints] = useState(0);
+	const [notes, setNotes] = useState('');
 	
-	const reflectCheckHandler = () => {
-		if (!reflectChecked) {
-			setReflectChecked(true);
-			props.onScoreUpdate('REFLECT', 5);
-		} else {
-			setReflectChecked(false);
-			props.onScoreUpdate('REFLECT', -5);
+	const pointsUpdateHandler = (num) => {
+		setPoints(points + num);
+		props.onScoreUpdate(num);
+	}
+	const notesUpdateHandler = (text) => {
+		setNotes(text);
+	}
+	
+	useEffect(() => {
+		if (props.isFormSubmitted) {
+			props.onSubmitResults('reflect', points, 'reflect_notes', notes);
 		}
-	}
-
-	const reflectNotesHandler = (event) => {
-		setEnteredReflectNotes(event.target.value);
-		props.onScoreUpdate('REFLECT', 0, enteredReflectNotes);
-	}
-
+	}, [props.isFormSubmitted, notes, points, props]);
+	
 	return (
-		<HabitRow name="Reflect">
+		<div>
+			<h2>Reflect</h2>
 			<Input
-				type="checkbox"
-				label="Accomplished"
-				id="reflect-check"
-				onChange={reflectCheckHandler} />
-			<Input
-				type="textarea"
-				label="Notes"
-				id="reflect-text"
-				value={enteredReflectNotes}
-				onChange={reflectNotesHandler} />
-			{reflectChecked && <p>+5</p>}
-		</HabitRow>
+				type='checkbox'
+				label='Reflect Accomplished'
+				id='reflect-check'
+				name='reflect-check'
+				onCheckboxUpdate={pointsUpdateHandler}
+				initChecked={props.initChecked}
+			/>
+			<TextArea 
+				label='Reflect Notes'
+				id='reflect-notes'
+				onTextAreaUpdate={notesUpdateHandler}
+				initTextArea={props.initTextArea}
+			/>
+			<RowScore points={points} />
+		</div>
 	);
 }
 
