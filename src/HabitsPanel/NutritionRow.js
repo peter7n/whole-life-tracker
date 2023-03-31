@@ -1,6 +1,7 @@
 /* === Props ===
  * initFoodAray: Initial array of noncompliant foods fetched from backend
  * initPoints: Initial points fetched from backend
+ * arePointsFetched: Used to set the correct total score if initial points were fetched
  * isFormSubmitted: True when the entire form is submitted
  * onSubmitResults: Submits results to the parent component
  */

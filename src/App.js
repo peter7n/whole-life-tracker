@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import DateBar from './DateBar/DateBar';
-import HabitsPanelRefactor from './HabitsPanel/HabitsPanelRefactor';
+import HabitsPanel from './HabitsPanel/HabitsPanel';
 // import HabitsPanel from './HabitsPanel/HabitsPanel';
 // import ScoreDisplay from './ScoreDisplay/ScoreDisplay';
 import HabitsHistory from './HabitsHistory/HabitsHistory';
@@ -83,7 +83,7 @@ function App() {
   } else if (daySubmitted) {
     viewContent = <p>Congrats! You submitted</p>;
   } else {
-    viewContent = <HabitsPanelRefactor onSubmitDay={submitDayHandler} date={currentDateId} />;
+    viewContent = <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />;
   }
 
   return (
