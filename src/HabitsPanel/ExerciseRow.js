@@ -30,16 +30,18 @@ const ExerciseRow = (props) => {
 	}, [props.isFormSubmitted, notes, points, props]);
 	
 	return (
-		<div>
+		<div className='row mt-3'>
 			<h2>Exercise</h2>
-			<Input
-				type='checkbox'
-				label='Exercise Accomplished'
-				id='exercise-check'
-				name='exercise-check'
-				onCheckboxUpdate={pointsUpdateHandler}
-				initChecked={props.initChecked}
-			/>
+			<div className='col'>
+				<Input
+					type='checkbox'
+					label='Exercise Accomplished'
+					id='exercise-check'
+					name='exercise-check'
+					onCheckboxUpdate={pointsUpdateHandler}
+					initChecked={props.initChecked}
+				/>
+			</div>
 			<TextArea 
 				label='Exercise Notes'
 				id='exercise-notes'

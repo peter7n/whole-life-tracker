@@ -7,7 +7,7 @@
  * onSubmitResults: Submits results to the parent component
  */
 
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import Select from '../UI/Select';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
@@ -72,7 +72,7 @@ const NutritionRow = (props) => {
 	}, [props.initPoints, props.initFoodArray]);
 	
 	return (
-		<Fragment>
+		<div className='row mt-3'>
 			<h2>Nutrition</h2>
 			<div className='col'>
 				<Select
@@ -100,11 +100,13 @@ const NutritionRow = (props) => {
 					onClick={nutritionAddHandler}
 				/>
 			</div>
-			<NutritionBadFoods 
-				foodArray={foodArray}
-			/>
+			{foodArray.length > 0 && <div className='mt-3'>
+				<NutritionBadFoods 
+					foodArray={foodArray}
+				/>
+			</div>}
 			<RowScore points={points} />
-		</Fragment>
+		</div>
 	);
 }
 

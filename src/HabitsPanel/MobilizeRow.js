@@ -23,16 +23,18 @@ const MobilizeRow = (props) => {
 	}, [props.isFormSubmitted, points, props]);
 
 	return (
-		<div>
+		<div className='row mt-3'>
 			<h2>Mobilize</h2>
-			<Input
-				type='checkbox'
-				label='Accomplished'
-				id='mobilize-check'
-				name='mobilize-check'
-				onCheckboxUpdate={pointsUpdateHandler}
-				initChecked={props.initChecked}
-			/>
+			<div className='col'>
+				<Input
+					type='checkbox'
+					label='Accomplished'
+					id='mobilize-check'
+					name='mobilize-check'
+					onCheckboxUpdate={pointsUpdateHandler}
+					initChecked={props.initChecked}
+				/>
+			</div>
 			<RowScore points={points} />
 		</div>
 	);

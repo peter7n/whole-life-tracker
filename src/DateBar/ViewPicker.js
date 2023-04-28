@@ -8,7 +8,7 @@ const ViewPicker = (props) => {
 	}
 	
 	return (
-		<form>
+		<form className="mt-3">
 			<Select
 				id="view"
 				label="View Entries"

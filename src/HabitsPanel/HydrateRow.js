@@ -24,16 +24,18 @@ const HydrateRow = (props) => {
 	}, [props.isFormSubmitted, points, props]);
 
 	return (
-		<div>
+		<div className='row mt-3'>
 			<h2>Hydrate</h2>
-			<Input
-				type='checkbox'
-				label='Accomplished'
-				id='hydrate-check'
-				name='hydrate-check'
-				onCheckboxUpdate={pointsUpdateHandler}
-				initChecked={props.initChecked}
-			/>
+			<div className='col'>
+				<Input
+					type='checkbox'
+					label='Accomplished'
+					id='hydrate-check'
+					name='hydrate-check'
+					onCheckboxUpdate={pointsUpdateHandler}
+					initChecked={props.initChecked}
+				/>
+			</div>
 			<RowScore points={points} />
 		</div>
 	);

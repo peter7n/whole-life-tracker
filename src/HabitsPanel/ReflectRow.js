@@ -29,16 +29,18 @@ const ReflectRow = (props) => {
 	}, [props.isFormSubmitted, notes, points, props]);
 	
 	return (
-		<div>
+		<div className='row mt-3'>
 			<h2>Reflect</h2>
-			<Input
-				type='checkbox'
-				label='Reflect Accomplished'
-				id='reflect-check'
-				name='reflect-check'
-				onCheckboxUpdate={pointsUpdateHandler}
-				initChecked={props.initChecked}
-			/>
+			<div className='col'>
+				<Input
+					type='checkbox'
+					label='Reflect Accomplished'
+					id='reflect-check'
+					name='reflect-check'
+					onCheckboxUpdate={pointsUpdateHandler}
+					initChecked={props.initChecked}
+				/>
+			</div>
 			<TextArea 
 				label='Reflect Notes'
 				id='reflect-notes'
