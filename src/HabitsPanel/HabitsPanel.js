@@ -33,6 +33,7 @@ const HabitsPanel = (props) => {
 	}
 
 	// === States ===
+
 	const [score, setScore] = useState(0);
 	const [submitState, setSubmitState] = useState(false);
 
@@ -54,13 +55,15 @@ const HabitsPanel = (props) => {
 	const [nutritionPointsFetched, setNutritionPointsFetched] = useState(false);
 
 	// === Handlers ===
+
 	const scoreUpdateHandler = (points) => {
-		console.log('adding to score: ' + points);
+		console.log('1. current score: ' + score);
+		console.log('2. adding to score: ' + points);
+		console.log('3. score + points: ' + (score + points));
 		setScore((prev) => {
 			return prev + points;
 		});
-		console.log('score: ' + score);
-		console.log('score + points: ' + (score + points));
+		console.log('4. new score: ' + score);
 	}
 
 	const submitHandler = (event) => {
@@ -82,9 +85,11 @@ const HabitsPanel = (props) => {
 	};
 
 	// === Effects ===
+
 	// Fetch data for today's date
 	useEffect(() => {
 		if (props.date) {
+			console.log('fetching ' + props.date);
 			fetch(fetchUrl + '/get-data/' + props.date)
 			.then((res) => res.json())
 			.then((data) => {

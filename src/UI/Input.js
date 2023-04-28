@@ -42,8 +42,6 @@ const Input = (props) => {
 			if (props.initChecked) {
 				props.onCheckboxUpdate(5);
 			}
-			console.log('changing checked to existing check state:' + props.label);
-			console.log(props.initChecked);
 		}
 	}, [props.initChecked]);
 

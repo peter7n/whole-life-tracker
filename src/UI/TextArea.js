@@ -20,8 +20,6 @@ const TextArea = (props) => {
 			setEnteredTextArea(props.initTextArea);
 			// Update text content in parent in case no changes are made
 			props.onTextAreaUpdate(props.initTextArea);
-			console.log('changing textarea to initTextArea: ' + props.label);
-			console.log(props.initTextArea);
 		}
 	}, [props.initTextArea]);
 		

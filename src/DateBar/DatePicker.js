@@ -1,24 +1,47 @@
+/* === Props ===
+ * onDateSubmit: Pass the entered date to edit
+*/
+
+import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { useState } from "react";
 
-const DatePicker = () => {
+const DatePicker = (props) => {
 	const [enteredDate, setEnteredDate] = useState('');
+	const [clearText, setClearText] = useState(false);
 
-	const enteredDateHandler = (event) => {
-		setEnteredDate(event.target.value);
+	const enteredDateHandler = (date) => {
+		setEnteredDate(date);
 	};
+
+	const clickHandler = () => {
+		props.onDateSubmit(enteredDate);
+		setClearText(true);
+	}
+
+	const resetClearTextHandler = (bool) => {
+		setClearText(bool);
+	}
+
+	// const DateInputHandler = (date) => {
+	// 	props.onDateChange(date);
+	// }
 
 	return (
 		<div>
-			<form>
+			<div>
 				<Input
 					type="text"
 					id="date"
 					label="Enter Date to Edit"
-					value={enteredDate}
-					onChange={enteredDateHandler}
+					onTextUpdate={enteredDateHandler}
+					clearText={clearText} 
+					onClearText={resetClearTextHandler}				/>
+				<Button
+					label='Go'
+					onClick={clickHandler}
 				/>
-			</form>
+			</div>
 		</div>
 	);
 }

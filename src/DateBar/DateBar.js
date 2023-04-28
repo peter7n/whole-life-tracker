@@ -1,31 +1,40 @@
+/* === Props ===
+ * receiveDate: Passes today's date
+ * receiveView: Passes current view selected
+ * receiveDateSelected: Passes date selected by user
+*/
+
 import DatePicker from './DatePicker';
 import ViewPicker from './ViewPicker';
 import { useEffect, useState } from 'react';
 
 const DateBar = (props) => {
-	let currentDate = new Date();
-	let day = String(currentDate.getDate()).padStart(2, '0');
-	let month = String(currentDate.getMonth() + 1).padStart(2, '0');
-	let year = currentDate.getFullYear().toString();
-	let dateId = year + month + day;
+	let newDate = new Date();
+	let day = String(newDate.getDate()).padStart(2, '0');
+	let month = String(newDate.getMonth() + 1).padStart(2, '0');
+	let year = newDate.getFullYear().toString();
+	let todaysDate = year + month + day;
 
-	const [viewVal, setViewVal] = useState('');
+	const [currDate, setCurrDate] = useState(todaysDate);
+
 	const viewPasserHandler = (val) => {
-		setViewVal(val);
+		props.receiveView(val);
 	}
 
-	useEffect(() => {
-		props.receiveDate(dateId);
-	}, [dateId, props]);
+	const datePasserHandler = (date) => {
+		setCurrDate(date);
+		props.receiveDateSelected(date);
+	}
 
+	// Pass today's date to parent only on first render
 	useEffect(() => {
-		props.receiveView(viewVal);
-	}, [viewVal, props]);
+		props.receiveDate(todaysDate);
+	}, [todaysDate]);
 
 	return (
 		<div className='row mb-3'>
-			<p>{year}.{month}.{day}</p>
-			<DatePicker />
+			<p>{currDate}</p>
+			<DatePicker onDateSubmit={datePasserHandler} />
 			<ViewPicker onViewChange={viewPasserHandler} />
 		</div>
 	);

@@ -12,6 +12,7 @@ function App() {
   const [daySubmitted, setDaySubmitted] = useState(false);
   const [currentDateId, setCurrentDateId] = useState('');
   const [currentView, setCurrentView] = useState('');
+  // const [currentDateSelected, setCurrentDateSelected] = useState('');
 
   let fetchUrl = 'https://masterptn.org:3000';
   const fetchUrlDev = 'http://localhost:3001';
@@ -21,12 +22,33 @@ function App() {
     fetchUrl = fetchUrlDev;
   }
   
+
+  // === Handlers ===
+  
   const submitDayHandler = (daySubmitData) => {
     console.log(daySubmitData);
     setDaySubmitted(true);
     setDaysDataObject(daySubmitData);
   }
   
+  const dateHandler = (dateId) => {
+    console.log('in app.js ' + dateId);
+    setCurrentDateId(dateId);
+  };
+
+  const viewHandler = (viewValue) => {
+    console.log('in app.js' + viewValue);
+    setCurrentView(viewValue);
+  };
+
+  // const selectedDateHandler = (dateId) => {
+  //   console.log('in app.js' + dateId);
+  //   setCurrentDateSelected(dateId);
+  //   setCurrentDateId(dateId);
+  // };
+
+  // === Effects ===
+
   // useEffect(() => {
   //   fetch('http://localhost:3001/api')
   //     .then((res) => res.json())
@@ -35,10 +57,11 @@ function App() {
   //       console.log(data);
   //   });
   // }, []);
-
-  // post entry with specified date
+  
+  // Post entry with specified date
   useEffect(() => {
     if (Object.keys(daysDataObject).length !== 0) {
+      console.log('POSTING to currentDateId: ' + currentDateId);
       fetch(fetchUrl + '/post-data/' + currentDateId, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -55,7 +78,7 @@ function App() {
     }
   }, [daysDataObject, currentDateId, fetchUrl]);
 
-  // fetch all entries
+  // Fetch all entries
   useEffect(() => {
     if (currentView === 'All') {
       fetch(fetchUrl + '/get-data/')
@@ -67,28 +90,22 @@ function App() {
     }
   }, [currentView, fetchUrl]);
 
-  const DateHandler = (dateId) => {
-    console.log('in app.js ' + dateId);
-    setCurrentDateId(dateId);
-  };
-
-  const viewHandler = (viewValue) => {
-    console.log('in app.js' + viewValue);
-    setCurrentView(viewValue);
-  };
-
   let viewContent = '';
   if (currentView === 'All') {
     viewContent = <HabitsHistory data={daysExistingData} />;
   } else if (daySubmitted) {
-    viewContent = <p>Congrats! You submitted</p>;
+    viewContent = <div><p>Congrats! You submitted</p><HabitsHistory data={[daysDataObject]} /></div>;
   } else {
     viewContent = <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />;
   }
 
   return (
     <div className='container'>
-      <DateBar receiveDate={DateHandler} receiveView={viewHandler} />
+      <DateBar 
+        receiveDate={dateHandler} 
+        receiveView={viewHandler} 
+        receiveDateSelected={dateHandler}
+      />
       {viewContent}
     </div>
   );
