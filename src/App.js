@@ -34,10 +34,12 @@ function App() {
   const dateHandler = (dateId) => {
     console.log('in app.js ' + dateId);
     setCurrentDateId(dateId);
+    // Set view to edit mode
+    setCurrentView('Select an Option');
   };
 
   const viewHandler = (viewValue) => {
-    console.log('in app.js' + viewValue);
+    console.log('in app.js: ' + viewValue);
     setCurrentView(viewValue);
   };
 
@@ -60,7 +62,7 @@ function App() {
   
   // Post entry with specified date
   useEffect(() => {
-    if (Object.keys(daysDataObject).length !== 0) {
+    if (Object.keys(daysDataObject).length !== 0 && daySubmitted === true) {
       console.log('POSTING to currentDateId: ' + currentDateId);
       fetch(fetchUrl + '/post-data/' + currentDateId, {
       method: 'POST',
@@ -71,12 +73,15 @@ function App() {
       .then ((data) => {
         console.log('Success', data);
         setDaysExistingData(data);
+        // Reset entry submitted state
+        setDaySubmitted(false);
+        setCurrentView('Success');
       })
       .catch((error) => {
         console.log("Error:", error);
       });
     }
-  }, [daysDataObject, currentDateId, fetchUrl]);
+  }, [daysDataObject, currentDateId, fetchUrl, daySubmitted]);
 
   // Fetch all entries
   useEffect(() => {
@@ -86,14 +91,14 @@ function App() {
       .then((data) => {
         setDaysExistingData(data);
         console.log(data);
-    });
+      });
     }
   }, [currentView, fetchUrl]);
 
   let viewContent = '';
   if (currentView === 'All') {
     viewContent = <HabitsHistory data={daysExistingData} />;
-  } else if (daySubmitted) {
+  } else if (currentView === 'Success') {
     viewContent = <div><p>Congrats! You submitted</p><HabitsHistory data={[daysDataObject]} /></div>;
   } else {
     viewContent = <HabitsPanel onSubmitDay={submitDayHandler} date={currentDateId} />;

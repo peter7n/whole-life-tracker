@@ -5,7 +5,7 @@
  * valueOptions: An array of the available select options
  */
 
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 
 const Select = (props) => {
 	const [selectSelected, setSelectSelected] = useState(props.initValue); 	// set initial select value
@@ -14,6 +14,14 @@ const Select = (props) => {
 		setSelectSelected(event.target.value);
 		props.onSelectUpdate(event.target.value);
 	}
+
+	useEffect(() => {
+		if (props.clearSelect) {
+			setSelectSelected(props.initValue);
+			// props.onSelectUpdate(props.initValue);
+			props.onClearSelect(false);
+		}
+	}, [props.clearSelect]);
 
 	return (
 		<Fragment>

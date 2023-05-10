@@ -33,11 +33,20 @@ const DateBar = (props) => {
 
 	return (
 		<div className='row mb-3'>
-			<p>{currDate}</p>
+			<p>{timeConverter(currDate)}</p>
 			<DatePicker onDateSubmit={datePasserHandler} />
 			<ViewPicker onViewChange={viewPasserHandler} />
 		</div>
 	);
 }
+
+const timeConverter = (dateId) => {
+	var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+	var year = dateId.substring(0,4);
+	var month = months[Number(dateId.substring(4,6) - 1)];
+	var date = dateId.substring(6);
+	var time = month + ' ' + date + ', ' + year;
+	return time;
+ }
 
 export default DateBar;

@@ -82,6 +82,8 @@ const HabitsPanel = (props) => {
 		console.log(dayData);
 		setSubmitState(false);	// stop infinite loop
 		props.onSubmitDay(dayData); // pass day data to App.js
+		// Reset score
+		setScore(0);
 	};
 
 	// === Effects ===
