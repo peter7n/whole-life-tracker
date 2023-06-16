@@ -13,6 +13,7 @@ import Input from '../UI/Input';
 import RowScore from './RowScore';
 import Button from '../UI/Button';
 import NutritionBadFoods from './NutritionBadFoods';
+import Card from '../UI/Card';
 
 const NutritionRow = (props) => {
 	// === States ===
@@ -72,13 +73,13 @@ const NutritionRow = (props) => {
 	}, [props.initPoints, props.initFoodArray]);
 	
 	return (
-		<div className='row mt-3'>
+		<Card className='row'>
 			<h2>Nutrition</h2>
 			<div className='col'>
 				<Select
 					id='nutrition-select'
 					name='nutritition-select'
-					label='Pts'
+					label='Points'
 					initValue='-1'
 					valueOptions={[-1, -2, -3, -4, -5]}
 					onSelectUpdate={badFoodPointHandler}
@@ -88,7 +89,7 @@ const NutritionRow = (props) => {
 				<Input
 					type='text'
 					id='nutrition-text'
-					label='Food'
+					label='Non-Compliant Food'
 					onTextUpdate={badFoodHandler}
 					clearText={clearText} 
 					onClearText={resetClearTextHandler}
@@ -106,7 +107,7 @@ const NutritionRow = (props) => {
 				/>
 			</div>}
 			<RowScore points={points} />
-		</div>
+		</Card>
 	);
 }
 

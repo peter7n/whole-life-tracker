@@ -7,6 +7,7 @@ import HydrateRow from './HydrateRow';
 import WellBeingRow from './WellBeingRow';
 import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
+import styles from './HabitsPanel.module.css';
 
 const HabitsPanel = (props) => {
 	let devMode = true;   // edit for dev or prod server
@@ -132,7 +133,7 @@ const HabitsPanel = (props) => {
 	}, [props.date, fetchUrl]);
 
 	return (
-		<form onSubmit={submitHandler} className='row mt-3'>
+		<form onSubmit={submitHandler} className='mt-3'>
 			<NutritionRow 
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
@@ -180,9 +181,7 @@ const HabitsPanel = (props) => {
 				initTextArea={initReflectNotes} 
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<div className='col'>
-				<button type="submit" className='btn btn-primary'>Submit</button>
-			</div>
+				<button type="submit" className={`btn btn-secondary ${styles.submit}`}>Submit</button>
 			<ScoreDisplay score={score} />
 		</form>
 	);

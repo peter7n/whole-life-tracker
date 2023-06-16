@@ -7,6 +7,7 @@
 import DatePicker from './DatePicker';
 import ViewPicker from './ViewPicker';
 import { useEffect, useState } from 'react';
+import styles from './DateBar.module.css';
 
 const DateBar = (props) => {
 	let newDate = new Date();
@@ -33,7 +34,7 @@ const DateBar = (props) => {
 
 	return (
 		<div className='row mb-3'>
-			<p>{timeConverter(currDate)}</p>
+			<p className={styles.date}>{timeConverter(currDate)}</p>
 			<DatePicker onDateSubmit={datePasserHandler} />
 			<ViewPicker onViewChange={viewPasserHandler} />
 		</div>

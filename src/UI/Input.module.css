@@ -1,0 +1,9 @@
+.big input {
+	width: 2em;
+	height: 2em;;
+	margin-right: 0.6em;
+}
+
+.big label {
+	font-size: calc(1.325rem + .9vw);
+}

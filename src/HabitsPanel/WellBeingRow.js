@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import TextArea from '../UI/TextArea';
 import RowScore from './RowScore';
+import Card from '../UI/Card';
 
 const WellBeingRow = (props) => {
 	const [points, setPoints] = useState(0);
@@ -29,12 +30,11 @@ const WellBeingRow = (props) => {
 	}, [props.isFormSubmitted, notes, points, props]);
 	
 	return (
-		<div className='row mt-3'>
-			<h2>Well-Being</h2>
+		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Well-Being Accomplished'
+					label='Well-Being'
 					id='wellbeing-check'
 					name='wellbeing-check'
 					onCheckboxUpdate={pointsUpdateHandler}
@@ -48,7 +48,7 @@ const WellBeingRow = (props) => {
 				initTextArea={props.initTextArea}
 			/>
 			<RowScore points={points} />
-		</div>
+		</Card>
 	);
 }
 

@@ -106,6 +106,7 @@ function App() {
 
   return (
     <div className='container'>
+      <h1>Whole Life Tracker</h1>
       <DateBar 
         receiveDate={dateHandler} 
         receiveView={viewHandler} 

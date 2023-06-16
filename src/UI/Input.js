@@ -7,7 +7,8 @@
  * type, id, name, label: Values for the input field
  */
 
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import styles from './Input.module.css';
 
 const Input = (props) => {
 	// === States ===
@@ -73,7 +74,7 @@ const Input = (props) => {
 	
 	// Return checkbox or text input
 	return (
-		<div className={`${props.type === 'checkbox' ? 'form-check' : ''}`}>
+		<div className={`${props.type === 'checkbox' ? 'form-check' : ''} ${props.type === 'checkbox' ? styles.big : ''}`}>
 			<label className={`${props.type === 'checkbox' ? 'form-check-label' : ''}`} htmlFor={props.id}>{props.label}</label>
 			<input 
 				className={`${props.type === 'checkbox' ? 'form-check-input' : props.type === 'radio' ? 'btn-check' : 'form-control'}`}

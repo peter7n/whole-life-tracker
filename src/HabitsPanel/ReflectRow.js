@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import TextArea from '../UI/TextArea';
 import RowScore from './RowScore';
+import Card from '../UI/Card';
 
 const ReflectRow = (props) => {
 	const [points, setPoints] = useState(0);
@@ -29,12 +30,11 @@ const ReflectRow = (props) => {
 	}, [props.isFormSubmitted, notes, points, props]);
 	
 	return (
-		<div className='row mt-3'>
-			<h2>Reflect</h2>
+		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Reflect Accomplished'
+					label='Reflect'
 					id='reflect-check'
 					name='reflect-check'
 					onCheckboxUpdate={pointsUpdateHandler}
@@ -48,7 +48,7 @@ const ReflectRow = (props) => {
 				initTextArea={props.initTextArea}
 			/>
 			<RowScore points={points} />
-		</div>
+		</Card>
 	);
 }
 

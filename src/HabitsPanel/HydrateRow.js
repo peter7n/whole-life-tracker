@@ -8,6 +8,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
+import Card from '../UI/Card';
 
 const HydrateRow = (props) => {
 	const [points, setPoints] = useState(0);
@@ -24,12 +25,11 @@ const HydrateRow = (props) => {
 	}, [props.isFormSubmitted, points, props]);
 
 	return (
-		<div className='row mt-3'>
-			<h2>Hydrate</h2>
+		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Accomplished'
+					label='Hydrate'
 					id='hydrate-check'
 					name='hydrate-check'
 					onCheckboxUpdate={pointsUpdateHandler}
@@ -37,7 +37,7 @@ const HydrateRow = (props) => {
 				/>
 			</div>
 			<RowScore points={points} />
-		</div>
+		</Card>
 	);
 }
 

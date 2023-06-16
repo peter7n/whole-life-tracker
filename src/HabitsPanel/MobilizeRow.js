@@ -7,6 +7,8 @@
 import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
+import Card from '../UI/Card';
+import styles from '../UI/Input.module.css';
 
 const MobilizeRow = (props) => {
 	const [points, setPoints] = useState(0);
@@ -23,12 +25,11 @@ const MobilizeRow = (props) => {
 	}, [props.isFormSubmitted, points, props]);
 
 	return (
-		<div className='row mt-3'>
-			<h2>Mobilize</h2>
+		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Accomplished'
+					label='Mobilize'
 					id='mobilize-check'
 					name='mobilize-check'
 					onCheckboxUpdate={pointsUpdateHandler}
@@ -36,7 +37,7 @@ const MobilizeRow = (props) => {
 				/>
 			</div>
 			<RowScore points={points} />
-		</div>
+		</Card>
 	);
 }
 

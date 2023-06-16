@@ -1,0 +1,33 @@
+.wlc-badge .text {
+	color: green;
+	vertical-align: text-bottom;
+	margin-left: 10px;
+}
+
+.wlc-badge .badge {
+	font-size: 25px;
+}
+
+.wlc-success {
+	background-color: #fff;
+	border: 1px solid green;
+	color: #8C8C8C;
+	animation: pop 0.3s linear 1;
+}
+
+@keyframes pop{
+	50%  {transform: scale(1.3);}
+ }
+
+.wlc-danger {
+	background-color: #fff;
+	border: 1px solid red;
+	color: #8C8C8C;
+}
+
+.wlc-secondary {
+	background-color: #fff;
+	border: 1px solid #737373;
+	color: #8C8C8C;
+}
+
