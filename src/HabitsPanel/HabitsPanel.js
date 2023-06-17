@@ -181,7 +181,7 @@ const HabitsPanel = (props) => {
 				initTextArea={initReflectNotes} 
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-				<button type="submit" className={`btn btn-secondary ${styles.submit}`}>Submit</button>
+			<div className='text-center'><button type="submit" className={`btn btn-secondary ${styles.submit}`}>Submit</button></div>
 			<ScoreDisplay score={score} />
 		</form>
 	);

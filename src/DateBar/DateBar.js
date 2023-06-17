@@ -34,7 +34,7 @@ const DateBar = (props) => {
 
 	return (
 		<div className='row mb-3'>
-			<p className={styles.date}>{timeConverter(currDate)}</p>
+			<div className={`text-center ${styles.date}`}>{timeConverter(currDate)}</div>
 			<DatePicker onDateSubmit={datePasserHandler} />
 			<ViewPicker onViewChange={viewPasserHandler} />
 		</div>

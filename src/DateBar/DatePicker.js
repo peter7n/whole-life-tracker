@@ -28,20 +28,18 @@ const DatePicker = (props) => {
 	// }
 
 	return (
-		<div>
-			<div>
-				<Input
-					type="text"
-					id="date"
-					label="Enter Date to Edit"
-					onTextUpdate={enteredDateHandler}
-					clearText={clearText} 
-					onClearText={resetClearTextHandler}				/>
-				<Button
-					label='Go'
-					onClick={clickHandler}
-				/>
-			</div>
+		<div className="mt-4">
+			<Input
+				type="text"
+				id="date"
+				label="Enter Date to Edit"
+				onTextUpdate={enteredDateHandler}
+				clearText={clearText} 
+				onClearText={resetClearTextHandler}				/>
+			<Button
+				label='Go'
+				onClick={clickHandler}
+			/>
 		</div>
 	);
 }
