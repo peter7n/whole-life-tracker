@@ -40,6 +40,11 @@ const NutritionRow = (props) => {
 		console.log(foodArray);
 	};
 
+	// const pointsUpdateHandler = (num) => {
+	// 	setPoints(points + num);
+	// 	props.onScoreUpdate(num);
+	// }
+
 	const badFoodPointHandler = (num) => {
 		setBadFoodPoint(num);
 	}
@@ -75,6 +80,16 @@ const NutritionRow = (props) => {
 	return (
 		<Card className='row'>
 			<h2>Nutrition</h2>
+			{/* <div className='col'>
+				<Input
+					type='checkbox'
+					label='Nutrition'
+					id='nutrition-check'
+					name='nutrition-check'
+					onCheckboxUpdate={pointsUpdateHandler}
+					initChecked={true}
+				/>
+			</div> */}
 			<div className='col'>
 				<Select
 					id='nutrition-select'
