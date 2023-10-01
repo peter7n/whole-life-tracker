@@ -22,12 +22,15 @@ const WellBeingRow = (props) => {
 	const notesUpdateHandler = (text) => {
 		setNotes(text);
 	}
+
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
 	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('wellbeing', points, 'wellbeing_notes', notes);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('wellbeing', points, 'wellbeing_notes', notes);
 		}
-	}, [props.isFormSubmitted, notes, points, props]);
+	}, [isFormSubmittedVal, notes, points, onSubmitResultsFunc]);
 	
 	return (
 		<Card className='row'>

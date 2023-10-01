@@ -54,13 +54,8 @@ const NutritionRow = (props) => {
 
 	// === Effects ===
 
-	//react-dom.development.js:86 Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
-
-	//Line 61:8:  The 'initFoodArrayVal' array makes the dependencies of useEffect Hook (at line 78) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'initFoodArrayVal' in its own useMemo() Hook
-
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initPointsVal = props.initPoints;
-	// const initFoodArrayVal = [...props.initFoodArray];
 	const initFoodArrayVal = useMemo(() => { return [...props.initFoodArray] }, [props.initFoodArray]);
 	const arePointsFetchedVal = props.arePointsFetched;
 	const onScoreUpdateFunc = props.onScoreUpdate;

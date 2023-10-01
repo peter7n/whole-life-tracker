@@ -23,12 +23,14 @@ const ExerciseRow = (props) => {
 		setNotes(text);
 	}
 
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
+	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			console.log('EXERCISE inside useEffect');
-			props.onSubmitResults('exercise', points, 'exercise_notes', notes);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('exercise', points, 'exercise_notes', notes);
 		}
-	}, [props.isFormSubmitted, notes, points, props]);
+	}, [isFormSubmittedVal, notes, points, onSubmitResultsFunc]);
 	
 	return (
 		<Card className='row'>

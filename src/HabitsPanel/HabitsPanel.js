@@ -90,10 +90,12 @@ const HabitsPanel = (props) => {
 	// === Effects ===
 
 	// Fetch data for today's date
+	const dateVal = props.date;
+
 	useEffect(() => {
-		if (props.date) {
-			console.log('fetching ' + props.date);
-			fetch(fetchUrl + '/get-data/' + props.date)
+		if (dateVal) {
+			console.log('fetching ' + dateVal);
+			fetch(fetchUrl + '/get-data/' + dateVal)
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.date) {
@@ -130,7 +132,7 @@ const HabitsPanel = (props) => {
 				console.log(data);
 			});
 		}
-	}, [props.date, fetchUrl]);
+	}, [dateVal, fetchUrl]);
 
 	return (
 		<form onSubmit={submitHandler} className='mt-3'>

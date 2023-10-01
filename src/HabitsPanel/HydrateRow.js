@@ -18,11 +18,14 @@ const HydrateRow = (props) => {
 		props.onScoreUpdate(num);
 	}
 
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
+	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('hydrate', points);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('hydrate', points);
 		}
-	}, [props.isFormSubmitted, points, props]);
+	}, [isFormSubmittedVal, points, onSubmitResultsFunc]);
 
 	return (
 		<Card className='row'>

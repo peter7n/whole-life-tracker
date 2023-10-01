@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
 import Card from '../UI/Card';
-import styles from '../UI/Input.module.css';
 
 const MobilizeRow = (props) => {
 	const [points, setPoints] = useState(0);
@@ -18,11 +17,14 @@ const MobilizeRow = (props) => {
 		props.onScoreUpdate(num);
 	}
 
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
+	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('mobilize', points);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('mobilize', points);
 		}
-	}, [props.isFormSubmitted, points, props]);
+	}, [isFormSubmittedVal, points, onSubmitResultsFunc]);
 
 	return (
 		<Card className='row'>

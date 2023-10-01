@@ -17,11 +17,14 @@ const SleepRow = (props) => {
 		props.onScoreUpdate(num);
 	}
 
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
+	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('sleep', points);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('sleep', points);
 		}
-	}, [props.isFormSubmitted, points, props]);
+	}, [isFormSubmittedVal, points, onSubmitResultsFunc]);
 
 	return (
 		<Card className='row'>

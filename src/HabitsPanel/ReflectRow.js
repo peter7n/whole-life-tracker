@@ -23,11 +23,14 @@ const ReflectRow = (props) => {
 		setNotes(text);
 	}
 	
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const onSubmitResultsFunc = props.onSubmitResults;
+	
 	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('reflect', points, 'reflect_notes', notes);
+		if (isFormSubmittedVal) {
+			onSubmitResultsFunc('reflect', points, 'reflect_notes', notes);
 		}
-	}, [props.isFormSubmitted, notes, points, props]);
+	}, [isFormSubmittedVal, notes, points, onSubmitResultsFunc]);
 	
 	return (
 		<Card className='row'>
