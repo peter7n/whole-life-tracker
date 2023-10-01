@@ -27,10 +27,12 @@ const DateBar = (props) => {
 		props.receiveDateSelected(date);
 	}
 
+	const receiveDateFunc = props.receiveDate;
+	
 	// Pass today's date to parent only on first render
 	useEffect(() => {
-		props.receiveDate(todaysDate);
-	}, [todaysDate]);
+		receiveDateFunc(todaysDate);
+	}, [todaysDate, receiveDateFunc]);
 
 	return (
 		<div className='row mb-3'>
