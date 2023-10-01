@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import NutritionRow from './NutritionRow';
 import ExerciseRow from './ExerciseRow';
 import MobilizeRow from './MobilizeRow';
@@ -8,9 +8,9 @@ import WellBeingRow from './WellBeingRow';
 import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import styles from './HabitsPanel.module.css';
+import devMode from '../devMode';
 
 const HabitsPanel = (props) => {
-	let devMode = true;   // edit for dev or prod server
 	let fetchUrl = 'https://masterptn.org:3000';
 	const fetchUrlDev = 'http://localhost:3001';
 	if (devMode) {
@@ -31,7 +31,7 @@ const HabitsPanel = (props) => {
 		reflect: 0,
 		reflect_notes: '',
 		total: 0
-	}
+	};
 
 	// === States ===
 
@@ -65,7 +65,7 @@ const HabitsPanel = (props) => {
 			return prev + points;
 		});
 		console.log('4. new score: ' + score);
-	}
+	};
 
 	const submitHandler = (event) => {
 		event.preventDefault();

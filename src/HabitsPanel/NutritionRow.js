@@ -7,7 +7,7 @@
  * onSubmitResults: Submits results to the parent component
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Select from '../UI/Select';
 import Input from '../UI/Input';
 import RowScore from './RowScore';
@@ -40,11 +40,6 @@ const NutritionRow = (props) => {
 		console.log(foodArray);
 	};
 
-	// const pointsUpdateHandler = (num) => {
-	// 	setPoints(points + num);
-	// 	props.onScoreUpdate(num);
-	// }
-
 	const badFoodPointHandler = (num) => {
 		setBadFoodPoint(num);
 	}
@@ -58,38 +53,44 @@ const NutritionRow = (props) => {
 	}
 
 	// === Effects ===
-	useEffect(() => {
-		if (props.isFormSubmitted) {
-			props.onSubmitResults('nutrition', points, 'nutrition_noncompliant', foodArray);
-		}
-	}, [props.isFormSubmitted, points, foodArray, props]);
+
+	//react-dom.development.js:86 Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+
+	//Line 61:8:  The 'initFoodArrayVal' array makes the dependencies of useEffect Hook (at line 78) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'initFoodArrayVal' in its own useMemo() Hook
+
+	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
+	const initPointsVal = props.initPoints;
+	// const initFoodArrayVal = [...props.initFoodArray];
+	const initFoodArrayVal = useMemo(() => { return [...props.initFoodArray] }, [props.initFoodArray]);
+	const arePointsFetchedVal = props.arePointsFetched;
+	const onScoreUpdateFunc = props.onScoreUpdate;
+	const isFormSubmittedVal = props.isFormSubmitted;
+	const submitResultsFunc = props.onSubmitResults;
 	
 	// Set initial points and food array fetched from backend
 	useEffect(() => {
-		setPoints(props.initPoints);
-		setFoodArray(props.initFoodArray);
-		console.log('food init points: ' + props.initPoints);
+		setPoints(initPointsVal);
+		setFoodArray(initFoodArrayVal);
+		console.log('food init points: ' + initPointsVal);
 		// If existing points were fetched, subtract 5 from score so initial points aren't counted
-		if (props.arePointsFetched) {
-			props.onScoreUpdate(props.initPoints - 5);
+		if (arePointsFetchedVal) {
+			onScoreUpdateFunc(initPointsVal - 5);
 		} else {
-			props.onScoreUpdate(props.initPoints);
+			onScoreUpdateFunc(initPointsVal);
 		}
-	}, [props.initPoints, props.initFoodArray]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initPointsVal, initFoodArrayVal, arePointsFetchedVal]);
+	
+	// Submit nutrition data on form submit
+	useEffect(() => {
+		if (isFormSubmittedVal) {
+			submitResultsFunc('nutrition', points, 'nutrition_noncompliant', foodArray);
+		}
+	}, [isFormSubmittedVal, submitResultsFunc, points, foodArray]);
 	
 	return (
 		<Card className='row'>
 			<h2>Nutrition</h2>
-			{/* <div className='col'>
-				<Input
-					type='checkbox'
-					label='Nutrition'
-					id='nutrition-check'
-					name='nutrition-check'
-					onCheckboxUpdate={pointsUpdateHandler}
-					initChecked={true}
-				/>
-			</div> */}
 			<div className='col'>
 				<Select
 					id='nutrition-select'
