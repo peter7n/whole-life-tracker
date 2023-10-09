@@ -27,12 +27,11 @@ const DateBar = (props) => {
 		props.receiveDateSelected(date);
 	}
 
-	const receiveDateFunc = props.receiveDate;
-	
 	// Pass today's date to parent only on first render
 	useEffect(() => {
-		receiveDateFunc(todaysDate);
-	}, [todaysDate, receiveDateFunc]);
+			props.receiveDate(todaysDate);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [todaysDate]);
 
 	return (
 		<div className='row mb-3'>
