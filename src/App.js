@@ -15,13 +15,22 @@ function App() {
   const [currentView, setCurrentView] = useState('');
   // const [currentDateSelected, setCurrentDateSelected] = useState('');
 
+  // Set development mode
   let fetchUrl = 'https://masterptn.org:3000';
   const fetchUrlDev = 'http://localhost:3001';
   if (devMode) {
     fetchUrl = fetchUrlDev;
   }
   
-
+  // Set deploy version
+  let deployVer = 1;
+  const pathArray = window.location.pathname.split('/');
+  const segment1 = pathArray[1];
+  console.log(segment1);
+  if (segment1 === 'ptn-wlc') {
+    deployVer = 2;
+  }
+  
   // === Handlers ===
   
   const submitDayHandler = (daySubmitData) => {
@@ -61,9 +70,15 @@ function App() {
   
   // Post entry with specified date
   useEffect(() => {
+    let postPath = '/post-data/';
+    if (deployVer === 2) {
+      console.log('DEPLOY VER = 2');
+      postPath = '/post-data-2/';
+    }
+    
     if (Object.keys(daysDataObject).length !== 0 && daySubmitted === true) {
       console.log('POSTING to currentDateId: ' + currentDateId);
-      fetch(fetchUrl + '/post-data/' + currentDateId, {
+      fetch(fetchUrl + postPath + currentDateId, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(daysDataObject)
@@ -80,19 +95,26 @@ function App() {
         console.log("Error:", error);
       });
     }
-  }, [daysDataObject, currentDateId, fetchUrl, daySubmitted]);
+  }, [daysDataObject, currentDateId, fetchUrl, daySubmitted, deployVer]);
 
   // Fetch all entries
   useEffect(() => {
+    let getPath = '/get-data/';
+    if (deployVer === 2) {
+      console.log('DEPLOY VER = 2');
+      getPath = '/get-data-2/';
+    }
+
     if (currentView === 'All') {
-      fetch(fetchUrl + '/get-data/')
+      fetch(fetchUrl + getPath)
       .then((res) => res.json())
       .then((data) => {
         setDaysExistingData(data);
+        console.log('GETTING ALL DATA');
         console.log(data);
       });
     }
-  }, [currentView, fetchUrl]);
+  }, [currentView, fetchUrl, deployVer]);
 
   let viewContent = '';
   if (currentView === 'All') {

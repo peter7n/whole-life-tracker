@@ -9,13 +9,23 @@ import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import styles from './HabitsPanel.module.css';
 import devMode from '../devMode';
+// import deployVer from '../deployVer';
 
 const HabitsPanel = (props) => {
+	// Set development mode
 	let fetchUrl = 'https://masterptn.org:3000';
 	const fetchUrlDev = 'http://localhost:3001';
 	if (devMode) {
 	  fetchUrl = fetchUrlDev;
 	}
+
+  // Set deploy version
+  let deployVer = 1;
+  const pathArray = window.location.pathname.split('/');
+  const segment1 = pathArray[1];
+  if (segment1 === 'ptn-wlc') {
+    deployVer = 2;
+  }
 
 	let dayData = {
 		date: props.date,
@@ -93,9 +103,15 @@ const HabitsPanel = (props) => {
 	const dateVal = props.date;
 
 	useEffect(() => {
+		let getPath = '/get-data/';
+		if (deployVer === 2) {
+		 console.log('DEPLOY VER = 2');
+		 getPath = '/get-data-2/';
+		} 
+
 		if (dateVal) {
 			console.log('fetching ' + dateVal);
-			fetch(fetchUrl + '/get-data/' + dateVal)
+			fetch(fetchUrl + getPath + dateVal)
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.date) {
@@ -132,7 +148,7 @@ const HabitsPanel = (props) => {
 				console.log(data);
 			});
 		}
-	}, [dateVal, fetchUrl]);
+	}, [dateVal, fetchUrl, deployVer]);
 
 	return (
 		<form onSubmit={submitHandler} className='mt-3'>
