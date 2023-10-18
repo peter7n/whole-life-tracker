@@ -2,43 +2,32 @@
  * onDateSubmit: Pass the entered date to edit
 */
 
-import Button from "../UI/Button";
-import Input from "../UI/Input";
+import Select from "../UI/Select";
 import { useState } from "react";
 
 const DatePicker = (props) => {
-	const [enteredDate, setEnteredDate] = useState('');
-	const [clearText, setClearText] = useState(false);
+	const [clearSelect, setClearSelect] = useState(false);
+	const valOptions = ['Select a Date', '20231011', '20231009', '20231008', '20231002', '20231001'];
 
-	const enteredDateHandler = (date) => {
-		setEnteredDate(date);
+	const dateChangeHandler = (value) => {
+		props.onDateSubmit(value);
+		setClearSelect(true);
+	}
+
+	const resetClearSelectHandler = (bool) => {
+		setClearSelect(bool);
 	};
-
-	const clickHandler = () => {
-		props.onDateSubmit(enteredDate);
-		setClearText(true);
-	}
-
-	const resetClearTextHandler = (bool) => {
-		setClearText(bool);
-	}
-
-	// const DateInputHandler = (date) => {
-	// 	props.onDateChange(date);
-	// }
-
+	
 	return (
 		<div className="mt-4">
-			<Input
-				type="text"
+			<Select
 				id="date"
-				label="Enter Date to Edit"
-				onTextUpdate={enteredDateHandler}
-				clearText={clearText} 
-				onClearText={resetClearTextHandler}				/>
-			<Button
-				label='Go'
-				onClick={clickHandler}
+				label="Edit Entry"
+				initValue="Select an Option"
+				valueOptions={valOptions}
+				onSelectUpdate={dateChangeHandler}
+				clearSelect={clearSelect}
+				onClearSelect={resetClearSelectHandler}
 			/>
 		</div>
 	);

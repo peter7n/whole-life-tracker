@@ -26,7 +26,6 @@ function App() {
   let deployVer = 1;
   const pathArray = window.location.pathname.split('/');
   const segment1 = pathArray[1];
-  console.log(segment1);
   if (segment1 === 'ptn-wlc') {
     deployVer = 2;
   }
@@ -101,7 +100,6 @@ function App() {
   useEffect(() => {
     let getPath = '/get-data/';
     if (deployVer === 2) {
-      console.log('DEPLOY VER = 2');
       getPath = '/get-data-2/';
     }
 

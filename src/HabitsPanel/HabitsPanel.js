@@ -61,20 +61,22 @@ const HabitsPanel = (props) => {
 	const [initExerciseNotes, setInitExerciseNotes] = useState('');
 	const [initWellbeingNotes, setInitWellbeingNotes] = useState('');
 	const [initReflectNotes, setInitReflectNotes] = useState('');
+
 	const [initNutritionPoints, setInitNutritionPoints] = useState(5);
+	// const [initExercisePoints, setInitExercisePoints] = useState(0);
 	const [initFoodArray, setInitFoodArray] = useState([]);
 	const [nutritionPointsFetched, setNutritionPointsFetched] = useState(false);
 
 	// === Handlers ===
 
 	const scoreUpdateHandler = (points) => {
-		console.log('1. current score: ' + score);
-		console.log('2. adding to score: ' + points);
-		console.log('3. score + points: ' + (score + points));
+		// console.log('1. current score: ' + score);
+		// console.log('2. adding to score: ' + points);
+		// console.log('3. score + points: ' + (score + points));
 		setScore((prev) => {
 			return prev + points;
 		});
-		console.log('4. new score: ' + score);
+		// console.log('4. new score: ' + score);
 	};
 
 	const submitHandler = (event) => {
@@ -105,7 +107,6 @@ const HabitsPanel = (props) => {
 	useEffect(() => {
 		let getPath = '/get-data/';
 		if (deployVer === 2) {
-		 console.log('DEPLOY VER = 2');
 		 getPath = '/get-data-2/';
 		} 
 
@@ -116,35 +117,67 @@ const HabitsPanel = (props) => {
 			.then((data) => {
 				if (data.date) {
 					console.log('entry exists');
+					// console.log('RESETTING total score to 0');
+					// setScore(0);
+
 					setInitNutritionPoints(data.nutrition);
 					setNutritionPointsFetched(true);
 					setInitFoodArray(data.nutrition_noncompliant);
 					if (data.exercise) {
 						setExerciseCheck(true);
 						setInitExerciseNotes(data.exercise_notes);
+					} else {
+						setExerciseCheck(false);
+						setInitExerciseNotes('');
 					}
 					if (data.mobilize) {
 						setMobilizeCheck(true);
+					} else {
+						setMobilizeCheck(false);
 					}
 					if (data.sleep) {
 						setSleepCheck(true);
+					} else {
+						setSleepCheck(false);
 					}
 					if (data.hydrate) {
 						setHydrateCheck(true);
+					} else {
+						setHydrateCheck(false);
 					}
 					if (data.wellbeing) {
 						setWellBeingCheck(true);
 						setInitWellbeingNotes(data.wellbeing_notes);
+					} else {
+						setWellBeingCheck(false);
+						setInitWellbeingNotes('');
 					}
 					if (data.reflect) {
 						setReflectCheck(true);
 						setInitReflectNotes(data.reflect_notes);
+					} else {
+						setReflectCheck(false);
+						setInitReflectNotes('');
 					}
 				} else {
 					console.log('entry not found');
+					// Reset all values
+					setInitNutritionPoints(5);
+					setNutritionPointsFetched(false);
+					setInitFoodArray([]);
+					setExerciseCheck(false);
+					setInitExerciseNotes('');
+					setMobilizeCheck(false);
+					setSleepCheck(false);
+					setHydrateCheck(false);
+					setWellBeingCheck(false);
+					setInitWellbeingNotes('');
+					setReflectCheck(false);
+					setInitReflectNotes('');
+					setScore(0);
 				}
 
-				console.log('getting current date:');
+				console.log('getting date: ' + dateVal);
 				console.log(data);
 			});
 		}

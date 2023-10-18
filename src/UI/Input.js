@@ -12,10 +12,12 @@ import styles from './Input.module.css';
 
 const Input = (props) => {
 	// === States ===
+
 	const [checkboxChecked, setCheckboxChecked] = useState(false);
 	const [enteredText, setEnteredText] = useState('');
 
 	// === Handlers ===
+
 	const checkboxHandler = () => {
 		if (!checkboxChecked) {
 			setCheckboxChecked(true);
@@ -36,12 +38,18 @@ const Input = (props) => {
 	// const checkFunc = props.onCheckboxUpdate;
 
 	// === Effects ===
+
 	// Set initial checkbox state and score to existing fetched data
 	useEffect(() => {
+		console.log('initChecked in Input: ' + props.initChecked);
 		if (props.initChecked !== undefined) {
 			setCheckboxChecked(props.initChecked);
 			if (props.initChecked) {
+				console.log('INPUT: +5');
 				props.onCheckboxUpdate(5);
+			} else {
+				console.log('INPUT: -5');
+				props.onCheckboxUpdate(-5);
 			}
 		}
 	}, [props.initChecked]);

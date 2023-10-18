@@ -16,6 +16,7 @@ const ExerciseRow = (props) => {
 	const [notes, setNotes] = useState('');
 	
 	const pointsUpdateHandler = (num) => {
+		console.log('EXERCISE: updating ' + points + ' + ' + num);
 		setPoints(points + num);
 		props.onScoreUpdate(num);
 	}
@@ -25,6 +26,23 @@ const ExerciseRow = (props) => {
 
 	const isFormSubmittedVal = props.isFormSubmitted;
 	const onSubmitResultsFunc = props.onSubmitResults;
+	
+	// === Effects ===
+
+	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
+	const initCheckedVal = props.initChecked;
+	console.log('initChecked = ' + initCheckedVal);
+	// const scoreUpdateFunc = props.onScoreUpdate;
+	
+	useEffect(() => {
+		console.log('EXERCISE: setting points in useEffect');
+		if (initCheckedVal) {
+			setPoints(5);
+			// scoreUpdateFunc(5);
+	} else {
+			setPoints(0);
+		}
+	}, [initCheckedVal]);
 	
 	useEffect(() => {
 		if (isFormSubmittedVal) {

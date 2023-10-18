@@ -16,6 +16,7 @@ const ReflectRow = (props) => {
 	const [notes, setNotes] = useState('');
 	
 	const pointsUpdateHandler = (num) => {
+		console.log('REFLECT: updating ' + points + ' + ' + num);
 		setPoints(points + num);
 		props.onScoreUpdate(num);
 	}
@@ -25,6 +26,19 @@ const ReflectRow = (props) => {
 	
 	const isFormSubmittedVal = props.isFormSubmitted;
 	const onSubmitResultsFunc = props.onSubmitResults;
+
+	// === Effects ===
+
+	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
+	const initCheckedVal = props.initChecked;
+	
+	useEffect(() => {
+		if (initCheckedVal) {
+			setPoints(5);
+		} else {
+			setPoints(0);
+		}
+	}, [initCheckedVal]);
 	
 	useEffect(() => {
 		if (isFormSubmittedVal) {
