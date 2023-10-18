@@ -49,23 +49,22 @@ const HabitsPanel = (props) => {
 	const [submitState, setSubmitState] = useState(false);
 
 	// checkbox control to set state on data load
-	const [exerciseCheck, setExerciseCheck] = useState(false);
+	const [exerciseCheck, setExerciseCheck] = useState({ checkState: false });
 	// const [radio1Check, setRadio1Check] = useState(false);
 	// const [radio2Check, setRadio2Check] = useState(false);
-	const [mobilizeCheck, setMobilizeCheck] = useState(false);
-	const [sleepCheck, setSleepCheck] = useState(false);
-	const [hydrateCheck, setHydrateCheck] = useState(false);
-	const [wellbeingCheck, setWellBeingCheck] = useState(false);
-	const [reflectCheck, setReflectCheck] = useState(false);
+	const [mobilizeCheck, setMobilizeCheck] = useState({ checkState: false });
+	const [sleepCheck, setSleepCheck] = useState({ checkState: false });
+	const [hydrateCheck, setHydrateCheck] = useState({ checkState: false });
+	const [wellbeingCheck, setWellBeingCheck] = useState({ checkState: false });
+	const [reflectCheck, setReflectCheck] = useState({ checkState: false });
 
 	const [initExerciseNotes, setInitExerciseNotes] = useState('');
 	const [initWellbeingNotes, setInitWellbeingNotes] = useState('');
 	const [initReflectNotes, setInitReflectNotes] = useState('');
 
 	const [initNutritionPoints, setInitNutritionPoints] = useState(5);
-	// const [initExercisePoints, setInitExercisePoints] = useState(0);
 	const [initFoodArray, setInitFoodArray] = useState([]);
-	const [nutritionPointsFetched, setNutritionPointsFetched] = useState(false);
+	// const [nutritionPointsFetched, setNutritionPointsFetched] = useState(false);
 
 	// === Handlers ===
 
@@ -117,62 +116,62 @@ const HabitsPanel = (props) => {
 			.then((data) => {
 				if (data.date) {
 					console.log('entry exists');
-					// console.log('RESETTING total score to 0');
-					// setScore(0);
+					console.log('RESETTING total score to 0');
+					setScore(0);
 
 					setInitNutritionPoints(data.nutrition);
-					setNutritionPointsFetched(true);
+					// setNutritionPointsFetched(true);
 					setInitFoodArray(data.nutrition_noncompliant);
 					if (data.exercise) {
-						setExerciseCheck(true);
+						setExerciseCheck({ checkState: true });
 						setInitExerciseNotes(data.exercise_notes);
 					} else {
-						setExerciseCheck(false);
+						setExerciseCheck({ checkState: false });
 						setInitExerciseNotes('');
 					}
 					if (data.mobilize) {
-						setMobilizeCheck(true);
+						setMobilizeCheck({ checkState: true });
 					} else {
-						setMobilizeCheck(false);
+						setMobilizeCheck({ checkState: false });
 					}
 					if (data.sleep) {
-						setSleepCheck(true);
+						setSleepCheck({ checkState: true });
 					} else {
-						setSleepCheck(false);
+						setSleepCheck({ checkState: false });
 					}
 					if (data.hydrate) {
-						setHydrateCheck(true);
+						setHydrateCheck({ checkState: true });
 					} else {
-						setHydrateCheck(false);
+						setHydrateCheck({ checkState: false });
 					}
 					if (data.wellbeing) {
-						setWellBeingCheck(true);
+						setWellBeingCheck({ checkState: true });
 						setInitWellbeingNotes(data.wellbeing_notes);
 					} else {
-						setWellBeingCheck(false);
+						setWellBeingCheck({ checkState: false });
 						setInitWellbeingNotes('');
 					}
 					if (data.reflect) {
-						setReflectCheck(true);
+						setReflectCheck({ checkState: true });
 						setInitReflectNotes(data.reflect_notes);
 					} else {
-						setReflectCheck(false);
+						setReflectCheck({ checkState: false });
 						setInitReflectNotes('');
 					}
 				} else {
 					console.log('entry not found');
 					// Reset all values
 					setInitNutritionPoints(5);
-					setNutritionPointsFetched(false);
+					// setNutritionPointsFetched(false);
 					setInitFoodArray([]);
-					setExerciseCheck(false);
+					setExerciseCheck({ checkState: false });
 					setInitExerciseNotes('');
-					setMobilizeCheck(false);
-					setSleepCheck(false);
-					setHydrateCheck(false);
-					setWellBeingCheck(false);
+					setMobilizeCheck({ checkState: false });
+					setSleepCheck({ checkState: false });
+					setHydrateCheck({ checkState: false });
+					setWellBeingCheck({ checkState: false });
 					setInitWellbeingNotes('');
-					setReflectCheck(false);
+					setReflectCheck({ checkState: false });
 					setInitReflectNotes('');
 					setScore(0);
 				}
@@ -190,7 +189,7 @@ const HabitsPanel = (props) => {
 				onSubmitResults={submitResultsHandler}
 				initPoints={initNutritionPoints}
 				initFoodArray={initFoodArray}
-				arePointsFetched={nutritionPointsFetched}
+				// arePointsFetched={nutritionPointsFetched}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
 			<ExerciseRow 

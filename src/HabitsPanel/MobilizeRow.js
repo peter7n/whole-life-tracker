@@ -27,7 +27,7 @@ const MobilizeRow = (props) => {
 	const initCheckedVal = props.initChecked;
 	
 	useEffect(() => {
-		if (initCheckedVal) {
+		if (initCheckedVal.checkState) {
 			setPoints(5);
 		} else {
 			setPoints(0);

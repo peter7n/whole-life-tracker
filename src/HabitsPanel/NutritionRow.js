@@ -57,7 +57,7 @@ const NutritionRow = (props) => {
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initPointsVal = props.initPoints;
 	const initFoodArrayVal = useMemo(() => { return [...props.initFoodArray] }, [props.initFoodArray]);
-	const arePointsFetchedVal = props.arePointsFetched;
+	// const arePointsFetchedVal = props.arePointsFetched;
 	const onScoreUpdateFunc = props.onScoreUpdate;
 	const isFormSubmittedVal = props.isFormSubmitted;
 	const submitResultsFunc = props.onSubmitResults;
@@ -68,13 +68,13 @@ const NutritionRow = (props) => {
 		setFoodArray(initFoodArrayVal);
 		console.log('food init points: ' + initPointsVal);
 		// If existing points were fetched, subtract 5 from score so initial points aren't counted
-		if (arePointsFetchedVal) {
-			onScoreUpdateFunc(initPointsVal - 5);
-		} else {
+		// if (arePointsFetchedVal) {
 			onScoreUpdateFunc(initPointsVal);
-		}
+		// } else {
+		// 	onScoreUpdateFunc(initPointsVal);
+		// }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initPointsVal, initFoodArrayVal, arePointsFetchedVal]);
+	}, [initPointsVal, initFoodArrayVal]);
 	
 	// Submit nutrition data on form submit
 	useEffect(() => {

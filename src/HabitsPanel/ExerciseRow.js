@@ -31,12 +31,12 @@ const ExerciseRow = (props) => {
 
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initCheckedVal = props.initChecked;
-	console.log('initChecked = ' + initCheckedVal);
+	console.log('initChecked = ' + initCheckedVal.checkState);
 	// const scoreUpdateFunc = props.onScoreUpdate;
 	
 	useEffect(() => {
 		console.log('EXERCISE: setting points in useEffect');
-		if (initCheckedVal) {
+		if (initCheckedVal.checkState) {
 			setPoints(5);
 			// scoreUpdateFunc(5);
 	} else {
@@ -59,7 +59,7 @@ const ExerciseRow = (props) => {
 					id='exercise-check'
 					name='exercise-check'
 					onCheckboxUpdate={pointsUpdateHandler}
-					initChecked={props.initChecked}
+					initChecked={initCheckedVal}
 				/>
 			</div>
 			<TextArea 
