@@ -33,8 +33,8 @@ const Select = (props) => {
 				value={selectSelected}
 				onChange={selectInputHandler}
 			>
-				{props.valueOptions.map((val, i) =>
-					<option key={i} value={val}>{val}</option>
+				{props.valueOptions.map((obj, i) =>
+					<option key={i} value={obj.value}>{obj.text}</option>
 				)}
 			</select>
 		</Fragment>

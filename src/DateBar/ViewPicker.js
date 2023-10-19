@@ -1,9 +1,13 @@
-import { useState } from "react";
-import Select from "../UI/Select";
+import { useState } from 'react';
+import Select from '../UI/Select';
 
 const ViewPicker = (props) => {
 	const [clearSelect, setClearSelect] = useState(false);
-	const valOptions = ['Select an Option', 'All', 'Last Week'];
+	const valOptions = [
+		{ text: 'Select an Option', value: 'Select an Option' },
+		{ text: 'All', value: 'All' },
+		{ text: 'Last Week', value: 'Last Week' },
+	];
 
 	const viewChangeHandler = (value) => {
 		props.onViewChange(value);
@@ -13,7 +17,7 @@ const ViewPicker = (props) => {
 	const resetClearSelectHandler = (bool) => {
 		setClearSelect(bool);
 	};
-	
+
 	return (
 		<form className="mt-4">
 			<Select
@@ -27,6 +31,6 @@ const ViewPicker = (props) => {
 			/>
 		</form>
 	);
-}
+};
 
 export default ViewPicker;

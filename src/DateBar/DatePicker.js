@@ -7,7 +7,11 @@ import { useState } from "react";
 
 const DatePicker = (props) => {
 	const [clearSelect, setClearSelect] = useState(false);
-	const valOptions = ['Select a Date', '20231011', '20231009', '20231008', '20231002', '20231001'];
+
+	// Get date range
+	const dateStart = new Date(2023,2,13);
+	const dateEnd = new Date(); // today's date
+	const valOptions = getDatesBetween(dateStart, dateEnd);
 
 	const dateChangeHandler = (value) => {
 		props.onDateSubmit(value);
@@ -23,7 +27,7 @@ const DatePicker = (props) => {
 			<Select
 				id="date"
 				label="Edit Entry"
-				initValue="Select an Option"
+				initValue="Select Date"
 				valueOptions={valOptions}
 				onSelectUpdate={dateChangeHandler}
 				clearSelect={clearSelect}
@@ -32,5 +36,23 @@ const DatePicker = (props) => {
 		</div>
 	);
 }
+
+// Returns an array of a date range
+const getDatesBetween = (startDate, endDate) => {
+	const currentDate = new Date(startDate.getTime());
+	let dates = [];
+	let dateObj = {};
+	let dateDate = ''
+	let dateVal = '';
+	while (currentDate <= endDate) {
+		dateObj = new Date(currentDate);
+		dateDate = dateObj.toDateString();
+		dateVal = dateObj.toISOString().slice(0,10).replace(/-/g,"");
+		dates.unshift({ text: dateDate, value: dateVal });
+		currentDate.setDate(currentDate.getDate() + 1);
+	}
+	dates.unshift({ text: 'Select Date', value: 'Select Date'});
+	return dates;
+ }
 
 export default DatePicker;

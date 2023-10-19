@@ -31,7 +31,6 @@ const ExerciseRow = (props) => {
 
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initCheckedVal = props.initChecked;
-	console.log('initChecked = ' + initCheckedVal.checkState);
 	// const scoreUpdateFunc = props.onScoreUpdate;
 	
 	useEffect(() => {

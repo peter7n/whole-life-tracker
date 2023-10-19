@@ -41,7 +41,6 @@ const Input = (props) => {
 
 	// Set initial checkbox state and score to existing fetched data
 	useEffect(() => {
-		// console.log('initChecked in Input: ' + props.initChecked.checkState);
 		if (props.initChecked !== undefined) {
 			setCheckboxChecked(props.initChecked.checkState);
 			if (props.initChecked.checkState) {
