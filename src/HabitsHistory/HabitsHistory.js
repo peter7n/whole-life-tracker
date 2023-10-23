@@ -1,3 +1,5 @@
+import timeConverter from "../Utilities/timeConverter";
+
 const HabitsHistory = (props) => {
 	let obj = props.data;
   
@@ -18,7 +20,7 @@ const HabitsHistory = (props) => {
 		revObjVals.map((entry, i) => 
 			<div key={i} className="card mb-3">
 				<div className="card-header">
-					{entry.date}
+					{timeConverter(entry.date)}
 				</div>
 				<ul className="list-group list-group-flush">
 					<li className='list-group-item'>Nutrition: <span className={`badge ${entry.nutrition > 4 ?'text-bg-success' : entry.nutrition < 1 ? 'text-bg-danger' : 'text-bg-secondary'}`}>{entry.nutrition}</span></li>

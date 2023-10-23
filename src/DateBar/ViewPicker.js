@@ -6,7 +6,7 @@ const ViewPicker = (props) => {
 	const valOptions = [
 		{ text: 'Select an Option', value: 'Select an Option' },
 		{ text: 'All', value: 'All' },
-		{ text: 'Last Week', value: 'Last Week' },
+		// { text: 'Last Week', value: 'Last Week' },
 	];
 
 	const viewChangeHandler = (value) => {
