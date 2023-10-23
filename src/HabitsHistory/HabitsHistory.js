@@ -22,7 +22,7 @@ const HabitsHistory = (props) => {
 				</div>
 				<ul className="list-group list-group-flush">
 					<li className='list-group-item'>Nutrition: <span className={`badge ${entry.nutrition > 4 ?'text-bg-success' : entry.nutrition < 1 ? 'text-bg-danger' : 'text-bg-secondary'}`}>{entry.nutrition}</span></li>
-					<li className='list-group-item'>Noncompliant Foods: {entry.nutrition_noncompliant.map((item, j) => <span key={j}>{item.food}, </span>)}</li>
+					<li className='list-group-item'>Noncompliant Foods: {entry.nutrition_noncompliant.map((item, j) => <span key={j}>{item.food}{j === entry.nutrition_noncompliant.length - 1 ? '' : ', '} </span>)}</li>
 					<li className='list-group-item'>Exercise: <span className={`badge ${entry.exercise ?'text-bg-success' : 'text-bg-danger'}`}>{entry.exercise}</span></li>
 					<li className='list-group-item'>Exercise Notes: {entry.exercise_notes}</li>
 					<li className='list-group-item'>Mobilize: <span className={`badge ${entry.mobilize ?'text-bg-success' : 'text-bg-danger'}`}>{entry.mobilize}</span></li>
