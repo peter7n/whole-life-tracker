@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
+import CheckRow from './CheckRow';
+import CheckAndNotesRow from './CheckAndNotesRow';
 import NutritionRow from './NutritionRow';
-import ExerciseRow from './ExerciseRow';
-import MobilizeRow from './MobilizeRow';
-import SleepRow from './SleepRow';
-import HydrateRow from './HydrateRow';
-import WellBeingRow from './WellBeingRow';
-import ReflectRow from './ReflectRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import styles from './HabitsPanel.module.css';
 import devMode from '../devMode';
@@ -192,39 +188,51 @@ const HabitsPanel = (props) => {
 				// arePointsFetched={nutritionPointsFetched}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<ExerciseRow 
+			<CheckAndNotesRow
+				label='Exercise' 
+				property='exercise'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
 				initChecked={exerciseCheck}
 				initTextArea={initExerciseNotes}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<MobilizeRow 
+			<CheckRow 
+				label='Mobilize'
+				property='mobilize'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
 				initChecked={mobilizeCheck}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<SleepRow 
+			<CheckRow
+				label='Sleep' 
+				property='sleep'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
 				initChecked={sleepCheck}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<HydrateRow 
+			<CheckRow
+				label='Hydrate' 
+				property='hydrate'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
 				initChecked={hydrateCheck}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<WellBeingRow 
+			<CheckAndNotesRow
+				label='Well-Being' 
+				property='wellbeing'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler} 
 				initChecked={wellbeingCheck}
 				initTextArea={initWellbeingNotes} 
 				onScoreUpdate={scoreUpdateHandler}
 			/>
-			<ReflectRow 
+			<CheckAndNotesRow
+				label='Reflect' 
+				property='reflect'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler} 
 				initChecked={reflectCheck}

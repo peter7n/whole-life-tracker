@@ -9,11 +9,10 @@ import Input from '../UI/Input';
 import RowScore from './RowScore';
 import Card from '../UI/Card';
 
-const MobilizeRow = (props) => {
+const CheckRow = (props) => {
 	const [points, setPoints] = useState(0);
 
 	const pointsUpdateHandler = (num) => {
-		console.log('MOBILIZE: updating ' + points + ' + ' + num);
 		setPoints(points + num);
 		props.onScoreUpdate(num);
 	}
@@ -25,6 +24,7 @@ const MobilizeRow = (props) => {
 
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initCheckedVal = props.initChecked;
+	const propertyVal = props.property;
 	
 	useEffect(() => {
 		if (initCheckedVal.checkState) {
@@ -36,18 +36,18 @@ const MobilizeRow = (props) => {
 	
 	useEffect(() => {
 		if (isFormSubmittedVal) {
-			onSubmitResultsFunc('mobilize', points);
+			onSubmitResultsFunc(propertyVal, points);
 		}
-	}, [isFormSubmittedVal, points, onSubmitResultsFunc]);
+	}, [isFormSubmittedVal, points, onSubmitResultsFunc, propertyVal]);
 
 	return (
 		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Mobilize'
-					id='mobilize-check'
-					name='mobilize-check'
+					label={props.label}
+					id={props.property + '-check'}
+					name={props.property + '-check'}
 					onCheckboxUpdate={pointsUpdateHandler}
 					initChecked={props.initChecked}
 				/>
@@ -57,4 +57,4 @@ const MobilizeRow = (props) => {
 	);
 }
 
-export default MobilizeRow;
+export default CheckRow;

@@ -11,56 +11,56 @@ import TextArea from '../UI/TextArea';
 import RowScore from './RowScore';
 import Card from '../UI/Card';
 
-const ReflectRow = (props) => {
+const CheckAndNotesRow = (props) => {
 	const [points, setPoints] = useState(0);
 	const [notes, setNotes] = useState('');
 	
 	const pointsUpdateHandler = (num) => {
-		console.log('REFLECT: updating ' + points + ' + ' + num);
 		setPoints(points + num);
 		props.onScoreUpdate(num);
 	}
 	const notesUpdateHandler = (text) => {
 		setNotes(text);
 	}
-	
+
 	const isFormSubmittedVal = props.isFormSubmitted;
 	const onSubmitResultsFunc = props.onSubmitResults;
-
+	
 	// === Effects ===
 
 	// Destructure/reassign props to remove 'props' as a dependency in useEffect()
 	const initCheckedVal = props.initChecked;
+	const propertyVal = props.property;
 	
 	useEffect(() => {
 		if (initCheckedVal.checkState) {
 			setPoints(5);
-		} else {
+	} else {
 			setPoints(0);
 		}
 	}, [initCheckedVal]);
 	
 	useEffect(() => {
 		if (isFormSubmittedVal) {
-			onSubmitResultsFunc('reflect', points, 'reflect_notes', notes);
+			onSubmitResultsFunc(propertyVal, points, propertyVal + '_notes', notes);
 		}
-	}, [isFormSubmittedVal, notes, points, onSubmitResultsFunc]);
+	}, [isFormSubmittedVal, notes, points, onSubmitResultsFunc, propertyVal]);
 	
 	return (
 		<Card className='row'>
 			<div className='col'>
 				<Input
 					type='checkbox'
-					label='Reflect'
-					id='reflect-check'
-					name='reflect-check'
+					label={props.label}
+					id={props.property + '-check'}
+					name={props.property + '-check'}
 					onCheckboxUpdate={pointsUpdateHandler}
-					initChecked={props.initChecked}
+					initChecked={initCheckedVal}
 				/>
 			</div>
 			<TextArea 
-				label='Reflect Notes'
-				id='reflect-notes'
+				label={props.label + ' Notes'}
+				id={props.property + '-notes'}
 				onTextAreaUpdate={notesUpdateHandler}
 				initTextArea={props.initTextArea}
 			/>
@@ -69,4 +69,4 @@ const ReflectRow = (props) => {
 	);
 }
 
-export default ReflectRow;
+export default CheckAndNotesRow;
