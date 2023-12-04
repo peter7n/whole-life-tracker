@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import CheckRow from './CheckRow';
 import CheckAndNotesRow from './CheckAndNotesRow';
-import NutritionRow from './NutritionRow';
+import ItemAddRow from './ItemAddRow';
 import ScoreDisplay from '../ScoreDisplay/ScoreDisplay';
 import styles from './HabitsPanel.module.css';
 import devMode from '../devMode';
@@ -23,6 +23,14 @@ const HabitsPanel = (props) => {
     deployVer = 2;
   }
 
+  const foodSelectValOptions = [
+		{ text: '-1', value: -1 },
+		{ text: '-2', value: -2 },
+		{ text: '-3', value: -3 },
+		{ text: '-4', value: -4 },
+		{ text: '-5', value: -5 }
+	];
+  
 	let dayData = {
 		date: props.date,
 		nutrition: 0,
@@ -180,11 +188,17 @@ const HabitsPanel = (props) => {
 
 	return (
 		<form onSubmit={submitHandler} className='mt-3'>
-			<NutritionRow 
+			<ItemAddRow
+				selectLabel='Points'
+				selectInitValue='-1'
+				selectValOptions={foodSelectValOptions}
+				textLabel='Non-Compliant Food'
+				property='nutrition'
+				property2='nutrition_noncompliant'
 				isFormSubmitted={submitState} 
 				onSubmitResults={submitResultsHandler}
 				initPoints={initNutritionPoints}
-				initFoodArray={initFoodArray}
+				initTextInputArray={initFoodArray}
 				// arePointsFetched={nutritionPointsFetched}
 				onScoreUpdate={scoreUpdateHandler}
 			/>
